@@ -1,45 +1,47 @@
 <template>
   <div>
-    <AlertError :errorMessage="errorMessage"/>
+    <AlertError :errorMessage="alertError"/>
     <br><h1>Create an account</h1><br>
     <input type="text" style="margin: 5px" placeholder="Username" v-model="userRequest.userName"><br>
     <input type="password" style="margin: 5px" placeholder="Password" v-model="userRequest.password"><br>
-    <input type="password" style="margin: 5px" placeholder="Re-type password" v-model="userRequest.password"><br><br>
+    <input type="password" style="margin: 5px" placeholder="Re-type password" v-model="userRequest.passwordRetype"><br><br>
     <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="registerNewUser">Create</button><br><br>
     <router-link to="/" style="color: white">Already have an account? Log in!</router-link>
   </div>
 </template>
 
 <script>
-import AlertSuccess from "@/components/alerts/AlertSuccess";
 import AlertError from "@/components/alerts/AlertError";
 
 export default {
   name: 'RegisterView',
-  components: {AlertSuccess,AlertError},
+  components: {AlertError},
   data: function () {
     return {
-      errorMessage: '',
+      alertError: '',
       userRequest: {
         userName: '',
-        password: ''
+        password: '',
+        passwordRetype: ''
       }
     }
   },
   methods: {
     registerNewUser: function () {
+      this.alertError = ''
+      if (this.userRequest.password === this.userRequest.passwordRetype) {
+        this.$http.post("/register/user", this.userRequest
+        ).then(response => {
+          sessionStorage.setItem('userName', this.userRequest.userName)
+          this.$router.push({name: 'menuRoute'})
+        }).catch(error => {
+          this.alertError = error.response.data.detail
+        });
+      } else {
+        this.alertError = 'Passwords do not match. Please try again!'
+        // todo: peab ära kustutama vana info, kasvõi ainult passwordid, username võib alles jääda
+      }
 
-      // todo: kas parool ja retype kattuvad
-      //  kui ei kattu, siis tee error alert (parool ja re-type ei kattu)
-
-      this.$http.post("/register/user", this.userRequest
-      ).then(response => {
-
-        // todo: liigu menu lehele
-
-      }).catch(error => {
-        // todo: kui tagastatakse viga, siis tee alert (nt kasutajanimi on juba kasutusel)
-      })
     },
 
   }

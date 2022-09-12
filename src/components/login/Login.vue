@@ -24,7 +24,6 @@ export default {
   data: function () {
     return {
       alertError: '',
-      // roles: [],
       loginRequest: {
         userName: '',
         password: ''
@@ -42,7 +41,6 @@ export default {
       this.alertError = ''
       this.$http.post("/login", this.loginRequest
       ).then(response => {
-        // todo: kui on user role 1, siis minna admin lehele
         this.loginResponse = response.data
         if (this.loginResponse.roleId == 1) {
           this.$router.push({name: 'adminRoute'});
@@ -51,7 +49,6 @@ export default {
           this.$router.push({name: 'menuRoute'})
         }
       }).catch(error => {
-        // todo: kui on error, siis anda sisu error alertile
         this.alertError = error.response.data.detail
       })
     }
