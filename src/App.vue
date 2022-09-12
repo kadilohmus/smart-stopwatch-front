@@ -34,7 +34,7 @@ nav a.router-link-exact-active {
   color: #ffffff;
 }
 body {
-  background: url("/src/assets/background.png");
+  background: url("/src/assets/taust.jpg");
   background-attachment: fixed;
   background-size: cover;
 }
