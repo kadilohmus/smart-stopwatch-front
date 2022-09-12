@@ -3,7 +3,10 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/register">Register</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/admin">Admin</router-link> |
+      <router-link to="/menu">Menu</router-link> |
+      <router-link to="/settings">Settings</router-link> |
+      <router-link to="/search">Search</router-link>
     </nav>
     <router-view/>
   </div>
@@ -15,7 +18,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 nav {
@@ -24,10 +27,16 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ffffff;
 }
+body {
+  background: url("/src/assets/background.png");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 </style>
