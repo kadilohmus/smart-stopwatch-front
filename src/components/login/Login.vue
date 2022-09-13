@@ -1,15 +1,19 @@
 <template>
-  <div class="border border; container" style="border-radius: 50px; width: 400px; height: 380px">
-    <br>
-    <h1>{{ title }}</h1><br>
+  <div>
     <AlertError :errorMessage="alertError"/>
-    <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Username" v-model="loginRequest.userName"><br>
-    <input type="password" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Password" v-model="loginRequest.password"><br><br>
-    <button type="button" style="margin: 5px" class="btn btn-dark btn-lg" v-on:click="logIn">Log in</button><br><br>
-    <router-link to="/register" style="color: white">Don't have an account? Create new!</router-link>
-    <br>
+    <div class="border border; container" style="border-radius: 50px; width: 400px; height: 380px">
+      <br>
+      <h1>{{ title }}</h1><br>
+      <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Username"
+             v-model="loginRequest.userName"><br>
+      <input type="password" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Password"
+             v-model="loginRequest.password"><br><br>
+      <button type="button" style="margin: 5px" class="btn btn-dark btn-lg" v-on:click="logIn">Log in</button>
+      <br><br>
+      <router-link to="/register" style="color: white">Don't have an account? Create new!</router-link>
+      <br>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -34,8 +38,6 @@ export default {
       }
     }
   },
-
-
   methods: {
     logIn: function () {
       this.alertError = ''
@@ -46,6 +48,7 @@ export default {
           this.$router.push({name: 'adminRoute'});
         } else {
           sessionStorage.setItem('userName', this.loginRequest.userName)
+          sessionStorage.setItem('userId', this.loginResponse.userId)
           this.$router.push({name: 'menuRoute'})
         }
       }).catch(error => {
@@ -54,7 +57,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>

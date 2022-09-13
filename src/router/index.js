@@ -6,6 +6,7 @@ import MenuView from "@/views/MenuView";
 import AdminView from "@/views/AdminView";
 import SettingsView from "@/views/SettingsView";
 import SearchView from "@/views/SearchView";
+import EventView from "@/views/EventView";
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/search',
     name: 'searchRoute',
     component: SearchView
+  },
+  {
+    path: '/event',
+    name: 'eventRoute',
+    component: EventView
   }
 ]
 
