@@ -30,6 +30,10 @@ export default {
         userName: '',
         password: '',
         passwordRetype: ''
+      },
+      userResponse: {
+        userId: 0,
+        roleId: 0
       }
     }
   },
@@ -39,7 +43,9 @@ export default {
       if (this.userRequest.password === this.userRequest.passwordRetype) {
         this.$http.post("/register/user", this.userRequest
         ).then(response => {
+          this.userResponse = response.data
           sessionStorage.setItem('userName', this.userRequest.userName)
+          sessionStorage.setItem('userId', this.userResponse.userId)
           this.$router.push({name: 'menuRoute'})
         }).catch(error => {
           this.alertError = error.response.data.detail

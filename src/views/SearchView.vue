@@ -41,8 +41,12 @@ export default {
               }
             }
         ).then(response => {
-          console.log(response)
-
+          let athleteResult = response.data
+          if (athleteResult.length === 0) {
+            this.alertWarning = response.data.detail;
+          } else {
+            // todo: athlete nimedega tabel
+          }
         }).catch(error => {
           this.alertError = error.response.data.detail
         });

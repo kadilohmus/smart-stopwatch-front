@@ -6,8 +6,8 @@
       <router-link to="/admin">Admin</router-link> |
       <router-link to="/menu">Menu</router-link> |
       <router-link to="/settings">Settings</router-link> |
-      <router-link to="/search">Search</router-link> |
-      <router-link to="/event">Event</router-link>
+      <router-link to="/event">Event</router-link> |
+      <router-link to="/search">Search</router-link>
     </nav>
     <router-view/>
   </div>
