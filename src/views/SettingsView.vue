@@ -68,7 +68,7 @@ export default {
         strokeId: ''
       },
       settingResponse: {
-        id: 0,
+        eventId: 0,
       },
     }
   },
@@ -82,7 +82,7 @@ export default {
         this.$http.post("/event/global/settings", this.settingRequest
         ).then(response => {
           this.settingResponse = response.data
-          sessionStorage.setItem('eventId', this.settingResponse.id)
+          sessionStorage.setItem('eventId', this.settingResponse.eventId)
           this.$router.push({name: 'eventRoute'})
         }).catch(error => {
           console.log(error)
