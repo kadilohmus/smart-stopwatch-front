@@ -7,21 +7,19 @@
     <section style="color: black; float: left; margin-left: 100px">
       <h3>Required</h3><br>
 
-      SPLIT <select style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.splitLengthId">
-      <option value="1">25</option>
-      <option value="2">50</option>
-      <option value="3">100</option>
-    </select> meters<br><br>
+      SPLIT <select style="margin: 10px; width: 90px; border-color: white; border-radius: 7px" v-model="settingRequest.splitLengthId">
+      <option value="" selected="true" disabled>meters</option>
+      <option v-for=" split in splitDto" :value="split.id">{{split.meters}}</option>
+    </select><br><br>
       <h3 style="color: black">Optional</h3><br>
       HEAT INTERVAL <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.heatIntervalSeconds"> seconds<br>
       NUMBER OF LANES <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfLanes"><br>
       NUMBER OF HEATS <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfHeats"><br>
       NUMBER OF ATHLETES <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfAthletes"><br>
       DISTANCE <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.eventLength"> meters<br>
-      STROKE <select style="margin: 10px; width: 120px; border-color: white; border-radius: 7px" v-model="settingRequest.strokeId">
-      <option value="1">Freestyle</option>
-      <option value="1">Butterfly</option>
-      <option value="1">...</option>
+      STROKE <select style="margin: 10px; width: 150px; border-color: white; border-radius: 7px" v-model="settingRequest.strokeId">
+      <option value="" disabled="true" selected="true">choose stroke</option>
+      <option v-for=" stroke in strokeDto" :value="stroke.id">{{stroke.type}}</option>
     </select><br><br>
     </section>
     <aside>
@@ -43,6 +41,9 @@ export default {
   name: "SettingsView",
   data: function () {
     return {
+      splitDto: [],
+      strokeDto: [],
+      userId: sessionStorage.getItem('userId'),
       settingRequest: {
         userId: sessionStorage.getItem('userId'),
         splitLengthId: '',
@@ -52,12 +53,10 @@ export default {
         numberOfAthletes: '',
         eventLength: '',
         strokeId: ''
-
       },
       settingResponse: {
-        id: 0
+        id: 0,
       },
-      userId: sessionStorage.getItem('userId')
     }
   },
   methods: {
@@ -66,19 +65,32 @@ export default {
       this.$http.post("/event/global/settings", this.settingRequest
       ).then(response => {
         this.settingResponse = response.data
-        console.log('EVENT ID ON' + this.settingResponse.eventId)
         sessionStorage.setItem('eventId', this.settingResponse.id)
         this.$router.push({name: 'eventRoute'})
-        console.log(response.data)
       }).catch(error => {
+        console.log(error)
+      })
+    },
+    findAllSplits: function () {
+      this.$http.get("/event/global/splits")
+          .then(response => {
+            this.splitDto = response.data
+          }).catch(error => {
+        console.log(error)
+      })
+    },
+    findAllStrokes: function () {
+      this.$http.get("/event/global/strokes")
+          .then(response => {
+            this.strokeDto = response.data
+          }).catch(error => {
         console.log(error)
       })
     }
   },
   mounted() {
-    // todo: siit kutsud välja meetodi mis käivitab get /event/global/settings teenuse
-    //  responsest saad kätte listid splitDtos ja strokeDtos, mille abil saad kokku panna dünaamilised split ja stroke dropdownid
-    this.createGlobalSettings()
+    this.findAllSplits()
+    this.findAllStrokes()
   }
 }
 </script>

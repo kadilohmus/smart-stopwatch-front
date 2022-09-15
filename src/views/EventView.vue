@@ -1,7 +1,7 @@
 <template>
   <div>
   <h1>Event</h1>
-    {{eventId}}
+    Event id: {{eventId}}
   </div>
 </template>
 
