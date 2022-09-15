@@ -52,8 +52,8 @@ export default {
         });
       } else {
         this.alertError = 'Passwords do not match. Please try again!'
-        // todo: kas saab ära kustutada mõlemad passwordid, aga username alles jätta?
-        // todo: siit on veel puudu alert --> [Kasutajanimi peab olema vahemikus 3-20 tähemärki, Parool peab olema vahemikus 3-255 tähemärki]
+        // kas saab ära kustutada mõlemad passwordid, aga username alles jätta?
+        // siit on veel puudu alert --> [Kasutajanimi peab olema vahemikus 3-20 tähemärki, Parool peab olema vahemikus 3-255 tähemärki]
       }
 
     },
