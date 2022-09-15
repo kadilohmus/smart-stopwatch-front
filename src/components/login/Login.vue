@@ -4,9 +4,9 @@
     <div class="border border; container" style="border-radius: 50px; width: 400px; height: 380px">
       <br>
       <h1>{{ title }}</h1><br>
-      <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Username"
+      <input type="text" class="rounded" style="margin: 5px; border-color: white" placeholder="Username"
              v-model="loginRequest.userName"><br>
-      <input type="password" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Password"
+      <input type="password" class="rounded" style="margin: 5px; border-color: white" placeholder="Password"
              v-model="loginRequest.password"><br><br>
       <button type="button" style="margin: 5px" class="btn btn-dark btn-lg" v-on:click="logIn">Log in</button>
       <br><br>

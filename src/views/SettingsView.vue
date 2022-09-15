@@ -6,21 +6,27 @@
     </div>
     <section style="color: black; float: left; margin-left: 100px">
       <h3>Required</h3><br>
-
-      SPLIT <select style="margin: 10px; width: 90px; border-color: white; border-radius: 7px" v-model="settingRequest.splitLengthId">
+      <AlertError :errorMessage="errorMessage"/>
+      POOL SPLIT <select class="rounded" style="margin: 10px; width: 90px; border-color: white"
+                         v-model="settingRequest.splitLengthId">
       <option value="" selected="true" disabled>meters</option>
-      <option v-for=" split in splitDto" :value="split.id">{{split.meters}}</option>
-    </select><br><br>
-      <h3 style="color: black">Optional</h3><br>
-      HEAT INTERVAL <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.heatIntervalSeconds"> seconds<br>
-      NUMBER OF LANES <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfLanes"><br>
-      NUMBER OF HEATS <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfHeats"><br>
-      NUMBER OF ATHLETES <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.numberOfAthletes"><br>
-      DISTANCE <input type=number style="margin: 10px; width: 60px; border-color: white; border-radius: 7px" v-model="settingRequest.eventLength"> meters<br>
-      STROKE <select style="margin: 10px; width: 150px; border-color: white; border-radius: 7px" v-model="settingRequest.strokeId">
+      <option v-for=" split in splitDto" :value="split.id">{{ split.meters }}</option>
+    </select><br>
+      DISTANCE <input type=number class="rounded" style="margin: 10px; width: 60px; border-color: white"
+                      v-model="settingRequest.eventLength"> meters<br>
+      STROKE <select class="rounded" style="margin: 10px; width: 150px; border-color: white"
+                     v-model="settingRequest.strokeId">
       <option value="" disabled="true" selected="true">choose stroke</option>
-      <option v-for=" stroke in strokeDto" :value="stroke.id">{{stroke.type}}</option>
-    </select><br><br>
+      <option v-for=" stroke in strokeDto" :value="stroke.id">{{ stroke.type }}</option>
+    </select><br>
+      NUMBER OF ATHLETES <input type=number class="rounded" style="margin: 10px; width: 60px; border-color: white"
+                                v-model="settingRequest.numberOfAthletes"><br>
+      NUMBER OF LANES <input type=number class="rounded" style="margin: 10px; width: 60px; border-color: white"
+                             v-model="settingRequest.numberOfLanes"><br>
+      NUMBER OF HEATS <input type=number class="rounded" style="margin: 10px; width: 60px; border-color: white"
+                             v-model="settingRequest.numberOfHeats"><br>
+      HEAT INTERVAL <input type=number class="rounded" style="margin: 10px; width: 60px; border-color: white"
+                           v-model="settingRequest.heatIntervalSeconds"> seconds<br>
     </section>
     <aside>
       <button type="button" style="margin: 50px; width: 150px; height: 150px" class="btn btn-dark"
@@ -32,15 +38,22 @@
     </aside>
 
     <br><br>
-    {{settingRequest}}
+    {{ settingRequest }}
   </div>
 </template>
 
 <script>
+
+import AlertError from "@/components/alerts/AlertError";
 export default {
+
+
   name: "SettingsView",
+  components: {AlertError},
   data: function () {
     return {
+      errorMessage: '',
+      allFieldsAreFilled: false,
       splitDto: [],
       strokeDto: [],
       userId: sessionStorage.getItem('userId'),
@@ -61,15 +74,22 @@ export default {
   },
   methods: {
     createGlobalSettings: function () {
+      this.errorMessage = ''
+      this.validateIfAllFieldsAreFilled()
+      if (!this.allFieldsAreFilled) {
+        this.errorMessage = 'All fields are required!'
+      } else {
+        this.$http.post("/event/global/settings", this.settingRequest
+        ).then(response => {
+          this.settingResponse = response.data
+          sessionStorage.setItem('eventId', this.settingResponse.id)
+          this.$router.push({name: 'eventRoute'})
+        }).catch(error => {
+          console.log(error)
+        })
+      }
 
-      this.$http.post("/event/global/settings", this.settingRequest
-      ).then(response => {
-        this.settingResponse = response.data
-        sessionStorage.setItem('eventId', this.settingResponse.id)
-        this.$router.push({name: 'eventRoute'})
-      }).catch(error => {
-        console.log(error)
-      })
+
     },
     findAllSplits: function () {
       this.$http.get("/event/global/splits")
@@ -86,6 +106,16 @@ export default {
           }).catch(error => {
         console.log(error)
       })
+    },
+    validateIfAllFieldsAreFilled: function () {
+      let input = this.settingRequest
+      this.allFieldsAreFilled = input.splitLengthId !== '' &&
+          input.eventLength  !== ''  &&
+          input.strokeId  !== ''  &&
+          input.numberOfAthletes  !== ''  &&
+          input.numberOfLanes  !== ''  &&
+          input.numberOfHeats  !== ''  &&
+          input.heatIntervalSeconds  !== ''
     }
   },
   mounted() {

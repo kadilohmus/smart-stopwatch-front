@@ -4,11 +4,11 @@
     <div class="border border; container" style="border-radius: 50px; width: 400px; height: 380px">
       <br>
       <h1>Create an account</h1><br>
-      <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Username"
+      <input type="text" class="rounded" style="margin: 5px; border-color: white" placeholder="Username"
              v-model="userRequest.userName"><br>
-      <input type="password" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Password"
+      <input type="password" class="rounded" style="margin: 5px; border-color: white" placeholder="Password"
              v-model="userRequest.password"><br>
-      <input type="password" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Re-type password"
+      <input type="password" class="rounded" style="margin: 5px; border-color: white" placeholder="Re-type password"
              v-model="userRequest.passwordRetype"><br><br>
       <button type="button" style="margin: 5px" class="btn btn-dark btn-lg" v-on:click="registerNewUser">Create</button>
       <br><br>
