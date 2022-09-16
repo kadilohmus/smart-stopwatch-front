@@ -1,60 +1,96 @@
 <template>
   <div>
-    <div>
+    <div style="float: right">
+      <router-link to="/settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to Settings
+      </router-link>
       <br>
-      <h1>Event</h1>
-      <h5 style="color: black">Event id: {{ eventId }}</h5><br><br>
     </div>
-    <section style="color: black; float: left; margin-left: 50px">
-      <div v-for="heatRow in eventInfoResponse.heatRows">
-        <button type="button" style="margin: 25px" class="btn btn-dark" v-on:click="startStopAction(heatRow)">{{heatRow.heatStatus}}</button>
-        <div v-for="athleteEvent in heatRow.athleteEvents">
-          <button type="button" style="margin: 25px" class="btn btn-success btn-lg" >{{athleteEvent.athleteName}}</button>
+    <br>
+    <h1>Event</h1><br>
+
+    <div class="container" v-if="divDisplayMainTable">
+      <div class="row" v-for="heatRow in eventInfoResponse.heatRows">
+        <div class="col">
+          <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="startStopAction(heatRow)">
+            {{ heatRow.heatStatus }}
+          </button>
+          <button type="button" style="margin: 5px" class="btn btn-success btn-lg"
+                  v-for="athleteEvent in heatRow.athleteEvents">{{ athleteEvent.athleteName }}
+          </button>
         </div>
-        <br>
+        <div class="col">
+          <h2>Time</h2>
+        </div>
+        <div class="col">
+          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>
+          <div v-for="athleteEvent in heatRow.athleteEvents">
+            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.eventLength }}
+            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="editAthleteEvent(athleteEvent)">
+              Edit
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div v-if="divDisplayEditAthleteEvent">
+      <select v-model="selectedAthleteId">
+
+                    <option value="" disabled="true" selected="true">choose swimmer</option>
+
+        <option value="1">name1</option>
+        <option value="2">name2</option>
+      </select>
+      <select class="rounded" style="width: 150px; border-color: white"
+              v-model="selectedStrokeTypeId">
+
+<!--        <div v-if="selectedAthleteId == null">-->
+<!--                      <option value="" disabled="true" selected="true">choose stroke</option>-->
+
+<!--        </div>-->
+<!--        <div v-else>-->
+<!--          <option value="" disabled="true" selected="false">choose stroke</option>-->
+<!--        </div>-->
+                    <option value="" disabled="true" selected="true">choose stroke</option>
+        <option v-for=" stroke in strokeDto" :value="stroke.id">{{ stroke.type }}</option>
+      </select>
+      <input type="text" placeholder="meters" v-model="selectedEventLength">
       <br>
-    </section>
+      <button type="button" style="margin: 5px" class="btn btn-dark">
+        Update
+      </button>
+<!--      todo: update meetod-->
+      <button type="button" style="margin: 5px" class="btn btn-dark">
+        Create athlete
+      </button>
+    </div>
+    <br><br><br>
 
-    <section style="color: black; float: right; margin-right: 400px">
-      <div v-for="heatRow in eventInfoResponse.heatRows">
-        <h5 style="color: darkred">Heat {{heatRow.heatNumber}}</h5>
-      <div v-for="athleteEvent in heatRow.athleteEvents">
 
-      </div>
-      </div>
-
-      NAME <br>
-      NAME <br>
-      NAME <br>
-      <h5 style="color: darkred">Heat 2</h5>
-      NAME <br>
-      NAME <br>
-      NAME <br>
-      <h5 style="color: darkred">Heat 3</h5>
-      NAME <br>
-      NAME <br>
-      NAME <br>
-      <h5 style="color: darkred">Heat 4</h5>
-      NAME <br>
-      NAME <br>
-      NAME <br>
-    </section>
-    <section class="border border; container" style="float: top; border-radius: 50px; width: 200px; height: 380px">
-      <h2 style="margin: 20px">0:00.00</h2><br>
-      <h2 style="margin: 20px">0:00.00</h2><br>
-      <h2 style="margin: 20px">0:00.00</h2><br>
-      <h2 style="margin: 20px">0:00.00</h2><br>
-    </section>
   </div>
+
 </template>
 
 <script>
 export default {
   name: "EventView",
+  components: {},
+
   data: function () {
     return {
+      divDisplayMainTable: true,
+      divDisplayEditAthleteEvent: false,
+      divDisplayDefaultAthleteOption: false,
       eventId: sessionStorage.getItem('eventId'),
+      selectedEventLength: 0,
+      selectedAthleteId: 0,
+      selectedStrokeTypeId: 0,
+      strokeDto: [
+        {
+          id: 0,
+          type: ''
+        }
+      ],
       eventInfoResponse: {
         heatRows: [
           {
@@ -73,6 +109,7 @@ export default {
                 laneNumber: 0,
                 eventLength: 0,
                 strokeId: 0,
+                strokeType: '',
                 splitLength: 0,
                 splitCounter: 0
               }
@@ -98,7 +135,7 @@ export default {
     },
     startStopAction: function (heatRow) {
       console.log('OLEN SIIN')
-    // todo: võib olla start event või stopp event
+      // todo: võib olla start event või stopp event
       if (heatRow.hasStarted) {
         // todo: reset stop teenus
       } else {
@@ -109,11 +146,11 @@ export default {
 
     startHeat: function (heatNumber) {
       this.$http.post("/event", null, {
-        params: {
-          eventId: this.eventId,
-          heatNumber: heatNumber
+            params: {
+              eventId: this.eventId,
+              heatNumber: heatNumber
 
-        }
+            }
           }
       ).then(response => {
         this.getEventInfo()
@@ -121,10 +158,30 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+    editAthleteEvent: function (athleteEvent) {
+      this.divDisplayMainTable = false
+      this.divDisplayEditAthleteEvent = true
+      this.selectedStrokeTypeId = athleteEvent.strokeId
+      this.selectedEventLength = athleteEvent.eventLength
+
+      if (athleteEvent.athleteId == null) {
+        this.selectedAthleteId = ''
+        this.divDisplayDefaultAthleteOption = true
+      }
+    },
+    findAllStrokes: function () {
+      this.$http.get("/event/global/strokes")
+          .then(response => {
+            this.strokeDto = response.data
+          }).catch(error => {
+        console.log(error)
+      })
+    },
   },
   mounted() {
     this.getEventInfo()
+    this.findAllStrokes()
   }
 }
 </script>
