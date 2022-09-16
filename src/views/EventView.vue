@@ -24,7 +24,7 @@
         <div class="col">
           <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>
           <div v-for="athleteEvent in heatRow.athleteEvents">
-            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.eventLength }}
+            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}
             <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="editAthleteEvent(athleteEvent)">
               Edit
             </button>
@@ -35,16 +35,13 @@
 
     <div v-if="divDisplayEditAthleteEvent">
       <select v-model="selectedAthleteId">
-
-        <option value="" disabled="true" selected="true">choose swimmer</option>
-
-        <option value="1">name1</option>
-        <option value="2">name2</option>
+        <option value="" disabled="true" selected="true">choose stroke</option>
+        <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{ athleteInfo.athleteName }}</option>
       </select>
       <select class="rounded" style="width: 150px; border-color: white"
               v-model="selectedStrokeTypeId">
         <option value="" disabled="true" selected="true">choose stroke</option>
-        <option v-for=" stroke in strokeDto" :value="stroke.id">{{ stroke.type }}</option>
+        <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>
       </select>
       <input type="text" placeholder="meters" v-model="selectedEventLength">
       <br>
@@ -80,7 +77,13 @@ export default {
       selectedEventLength: 0,
       selectedAthleteId: 0,
       selectedStrokeTypeId: 0,
-      strokeDto: [
+      athleteInfos: [
+        {
+          athleteId: 0,
+          athleteName: ''
+        }
+      ],
+      strokeDtos: [
         {
           id: 0,
           type: ''
@@ -159,6 +162,7 @@ export default {
       this.divDisplayEditAthleteEvent = true
       this.selectedStrokeTypeId = athleteEvent.strokeId
       this.selectedEventLength = athleteEvent.athleteEventLength
+      this.selectedAthleteId = athleteEvent.athleteId
 
       if (athleteEvent.athleteId == null) {
         this.selectedAthleteId = ''
@@ -173,15 +177,28 @@ export default {
     findAllStrokes: function () {
       this.$http.get("/setup/stroke")
           .then(response => {
-            this.strokeDto = response.data
+            this.strokeDtos = response.data
           }).catch(error => {
         console.log(error)
       })
     },
+    findAllAthletes: function () {
+      this.$http.get("/setup/all-athlete", {
+            params: {
+              userId: 1
+            }
+          }
+      ).then(response => {
+        this.athleteInfos = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   },
   mounted() {
     this.getEventInfo()
     this.findAllStrokes()
+    this.findAllAthletes()
   }
 }
 </script>
