@@ -36,30 +36,25 @@
     <div v-if="divDisplayEditAthleteEvent">
       <select v-model="selectedAthleteId">
 
-                    <option value="" disabled="true" selected="true">choose swimmer</option>
+        <option value="" disabled="true" selected="true">choose swimmer</option>
 
         <option value="1">name1</option>
         <option value="2">name2</option>
       </select>
       <select class="rounded" style="width: 150px; border-color: white"
               v-model="selectedStrokeTypeId">
-
-<!--        <div v-if="selectedAthleteId == null">-->
-<!--                      <option value="" disabled="true" selected="true">choose stroke</option>-->
-
-<!--        </div>-->
-<!--        <div v-else>-->
-<!--          <option value="" disabled="true" selected="false">choose stroke</option>-->
-<!--        </div>-->
-                    <option value="" disabled="true" selected="true">choose stroke</option>
+        <option value="" disabled="true" selected="true">choose stroke</option>
         <option v-for=" stroke in strokeDto" :value="stroke.id">{{ stroke.type }}</option>
       </select>
       <input type="text" placeholder="meters" v-model="selectedEventLength">
       <br>
+      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAtleteEvent">
+        Cancel
+      </button>
       <button type="button" style="margin: 5px" class="btn btn-dark">
         Update
       </button>
-<!--      todo: update meetod-->
+      <!--      todo: update meetod-->
       <button type="button" style="margin: 5px" class="btn btn-dark">
         Create athlete
       </button>
@@ -101,17 +96,17 @@ export default {
             athleteEvents: [
               {
                 athleteId: 0,
-                athleteEventId: 1,
-                athleteName: '',
-                startTime: '',
-                finishTime: '',
-                heatNumber: 0,
-                laneNumber: 0,
-                eventLength: 0,
+                athleteEventId: 0,
+                athleteEventLength: 0,
+                athleteName: 'string',
                 strokeId: 0,
-                strokeType: '',
-                splitLength: 0,
-                splitCounter: 0
+                strokeType: 'string',
+                hasStarted: true,
+                startTime: '2022-09-16T23:10:23.409Z',
+                lastSplitTime: '2022-09-16T23:10:23.409Z',
+                lastSplitLength: 0,
+                hasFinished: true,
+                finishTime: '2022-09-16T23:10:23.409Z'
               }
             ]
           }
@@ -121,7 +116,7 @@ export default {
   },
   methods: {
     getEventInfo: function () {
-      this.$http.get("/event/id", {
+      this.$http.get("/stopper/dashboard", {
             params: {
               eventId: 1
             }
@@ -163,15 +158,20 @@ export default {
       this.divDisplayMainTable = false
       this.divDisplayEditAthleteEvent = true
       this.selectedStrokeTypeId = athleteEvent.strokeId
-      this.selectedEventLength = athleteEvent.eventLength
+      this.selectedEventLength = athleteEvent.athleteEventLength
 
       if (athleteEvent.athleteId == null) {
         this.selectedAthleteId = ''
         this.divDisplayDefaultAthleteOption = true
       }
     },
+    cancelEditAtleteEvent: function () {
+      this.divDisplayMainTable = true
+      this.divDisplayEditAthleteEvent = false
+
+    },
     findAllStrokes: function () {
-      this.$http.get("/event/global/strokes")
+      this.$http.get("/setup/stroke")
           .then(response => {
             this.strokeDto = response.data
           }).catch(error => {

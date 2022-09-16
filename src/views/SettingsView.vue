@@ -105,7 +105,7 @@ export default {
       if (!this.allFieldsAreFilled) {
         this.errorMessage = 'All fields are required!'
       } else {
-        this.$http.post("/event/global/settings", this.settingRequest
+        this.$http.post("/setup/event", this.settingRequest
         ).then(response => {
           this.settingResponse = response.data
           sessionStorage.setItem('eventId', this.settingResponse.eventId)
@@ -116,7 +116,7 @@ export default {
       }
     },
     findAllSplits: function () {
-      this.$http.get("/event/global/splits")
+      this.$http.get("/setup/split")
           .then(response => {
             this.splitDto = response.data
           }).catch(error => {
@@ -124,7 +124,7 @@ export default {
       })
     },
     findAllStrokes: function () {
-      this.$http.get("/event/global/strokes")
+      this.$http.get("/setup/stroke")
           .then(response => {
             this.strokeDto = response.data
           }).catch(error => {
