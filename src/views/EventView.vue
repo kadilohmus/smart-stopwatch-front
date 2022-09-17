@@ -25,7 +25,11 @@
         <!-- todo: (NAMED BUTTONS) -->
         <div class="col" v-for="athleteEvent in heatRow.athleteEvents">
           <div class="row">
-            <NameButton :athlete-event="athleteEvent" @editAthleteEvent="editClick(athleteEvent)"/>
+            <NameButton :athlete-event="athleteEvent"
+                        @splitClickEvent="splitClick(athleteEvent)"
+                        @editClickEvent="editClick(athleteEvent)"
+                        @undoClickEvent="undoClickEvent(athleteEvent)"
+            />
           </div>
           <div class="row">
             <p class="text-center">{{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}</p>
@@ -38,14 +42,14 @@
         </div>
 
         <!-- todo: (HEAT) ATHLETE EVENT DETAILS -->
-<!--        <div class="col">-->
-<!--          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>-->
+        <!--        <div class="col">-->
+        <!--          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>-->
 
-<!--          <div v-for="athleteEvent in heatRow.athleteEvents">-->
-<!--            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}-->
-<!--            <font-awesome-icon icon="fa-solid fa-pen-to-square" v-on:click="editAthleteEvent(athleteEvent)"/>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--          <div v-for="athleteEvent in heatRow.athleteEvents">-->
+        <!--            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}-->
+        <!--            <font-awesome-icon icon="fa-solid fa-pen-to-square" v-on:click="editAthleteEvent(athleteEvent)"/>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </div>
 
@@ -66,7 +70,7 @@
       </select>
       <input type="text" placeholder="meters" v-model="selectedEventLength">
       <br>
-      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAtleteEvent">
+      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAthleteEvent">
         Cancel
       </button>
       <button type="button" style="margin: 5px" class="btn btn-dark">
@@ -165,7 +169,6 @@ export default {
       } else {
         this.startHeat(heatRow.heatNumber)
       }
-
     },
 
     startHeat: function (heatNumber) {
@@ -183,7 +186,22 @@ export default {
         console.log(error)
       })
     },
+    splitClick: function (athleteEvent) {
+      alert("SPLIT CLICK EVENT " + athleteEvent.athleteName)
+      this.$http.post("/event", null, {
+            params: {
+              athleteEventId: athleteEvent.athleteEventId
+            }
+          }
+      ).then(response => {
+        this.getEventInfo()
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     editClick: function (athleteEvent) {
+      alert("EDIT CLICK EVENT " + athleteEvent.athleteName)
+
       this.divDisplayMainTable = false
       this.divDisplayEditAthleteEvent = true
       this.selectedStrokeTypeId = athleteEvent.strokeId
@@ -195,7 +213,10 @@ export default {
         this.divDisplayDefaultAthleteOption = true
       }
     },
-    cancelEditAtleteEvent: function () {
+    undoClickEvent: function (athleteEvent) {
+      alert("EDIT UNDO CLICK EVENT " + athleteEvent.athleteName)
+    },
+    cancelEditAthleteEvent: function () {
       this.divDisplayMainTable = true
       this.divDisplayEditAthleteEvent = false
 

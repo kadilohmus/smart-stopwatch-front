@@ -1,16 +1,22 @@
 <template>
   <div>
     <div v-if="!athleteEvent.hasStarted && !athleteEvent.hasFinished">
-      <NameButtonInitial @editClickEvent="editClick" @splitClickEvent="splitClick" :athlete-event="athleteEvent"/>
+      <NameButtonInitial :athlete-event="athleteEvent"
+                         @splitClickEvent="splitClick(athleteEvent)"
+                         @editClickEvent="editClick(athleteEvent)"/>
     </div>
     <div v-else-if="athleteEvent.hasStarted && !athleteEvent.hasFinished">
-      <NameButtonStarted @splitClickEvent="splitClick" :athlete-event="athleteEvent"/>
+      <NameButtonStarted :athlete-event="athleteEvent"
+                         @splitClickEvent="splitClick(athleteEvent)"
+                         @undoClickEvent="undoAthleteEvent(athleteEvent)"/>
     </div>
     <div v-else>
-      <NameButtonFinished @splitClickEvent="splitClick" :athlete-event="athleteEvent"/>
+      <NameButtonFinished :athlete-event="athleteEvent"
+                          @undoClickEvent="undoAthleteEvent(athleteEvent)"/>
     </div>
   </div>
 </template>
+
 <script>
 import NameButtonInitial from "@/components/dashboard/name-button/NameButtonInitial";
 import NameButtonStarted from "@/components/dashboard/name-button/NameButtonStarted";
@@ -23,20 +29,14 @@ export default {
     athleteEvent: {}
   },
   methods: {
-    editClick: function () {
-      this.$emit('editAthleteEvent')
-    },
     splitClick: function () {
-      this.$http.post("/some/path", null, {
-            params: {
-              athleteEventId: ''
-            }
-          }
-      ).then(response => {
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
+      this.$emit('splitClickEvent')
+    },
+    editClick: function () {
+      this.$emit('editClickEvent')
+    },
+    undoAthleteEvent: function () {
+      this.$emit('undoClickEvent')
     }
   }
 }
