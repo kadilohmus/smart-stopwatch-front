@@ -1,8 +1,10 @@
 <template>
   <div>
 
+    <!-- todo: (TIITEL JA BACK TO SETTINGS NUPP) -->
     <DashboardHeader/>
 
+    <!-- todo: (HALL KAST) -->
     <div class="container p-3 mb-2 bg-secondary text-white" v-if="divDisplayMainTable">
 
       <!-- todo: (LOOPIME RIDASID) -->
@@ -10,6 +12,7 @@
 
         <StartStopButton :heat-row="heatRow"
                          @startHeatClickEvent="startHeatClick(heatRow)"
+                         @stopHeatClickEvent="stopHeatClick(heatRow)"
 
         />
 
@@ -141,6 +144,24 @@ export default {
     }
   },
   methods: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     getEventInfo: function () {
       this.$http.get("/stopper/dashboard", {
             params: {
@@ -156,6 +177,7 @@ export default {
     },
 
     startHeatClick: function (heatRow) {
+      alert("START heat event ")
       this.$http.post("/event", null, {
             params: {
               eventId: this.eventId,
@@ -167,6 +189,11 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+
+    stopHeatClick: function (heatRow) {
+      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
+      alert("STOP heat event ")
     },
 
     splitClick: function (athleteEvent) {
@@ -181,6 +208,15 @@ export default {
       // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
       alert("UNDO click event " + athleteEvent.athleteName)
     },
+
+
+
+
+
+
+
+
+
 
     // todo: SEE KÕIK ERALDI VAATESSE ÄRA VIIA
     findAllStrokes: function () {
@@ -203,6 +239,15 @@ export default {
         console.log(error)
       })
     }
+
+
+
+
+
+
+
+
+
   },
   mounted() {
     this.getEventInfo()
