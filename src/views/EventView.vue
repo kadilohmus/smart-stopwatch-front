@@ -1,42 +1,63 @@
 <template>
   <div>
+
     <div style="float: right">
       <router-link to="/settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to Settings
       </router-link>
       <br>
     </div>
     <br>
-    <h1>Event</h1><br>
 
-    <div class="container" v-if="divDisplayMainTable">
-      <div class="row" v-for="heatRow in eventInfoResponse.heatRows">
+
+    <h1 class="text-center">Event</h1><br>
+
+    <div class="container p-3 mb-2 bg-secondary text-white" v-if="divDisplayMainTable">
+      <!-- todo: (ÜKS RIDA) -->
+      <div class="row" v-for="heatRow in stopperDashboard.heatRows" :key="heatRow.uuid">
+
+        <!-- todo: (START/STOP) -->
         <div class="col">
           <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="startStopAction(heatRow)">
-            {{ heatRow.heatStatus }}
-          </button>
-          <button type="button" style="margin: 5px" class="btn btn-success btn-lg"
-                  v-for="athleteEvent in heatRow.athleteEvents">{{ athleteEvent.athleteName }}
+            {{ heatRow.heatButtonStatus }}
           </button>
         </div>
-        <div class="col">
-          <h2>Time</h2>
-        </div>
-        <div class="col">
-          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>
-          <div v-for="athleteEvent in heatRow.athleteEvents">
-            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}
-            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="editAthleteEvent(athleteEvent)">
-              Edit
-            </button>
+
+        <!-- todo: (NAMED BUTTONS) -->
+        <div class="col" v-for="athleteEvent in heatRow.athleteEvents">
+          <div class="row">
+            <NameButton :athlete-event="athleteEvent" @editAthleteEvent="editClick(athleteEvent)"/>
+          </div>
+          <div class="row">
+            <p class="text-center">{{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}</p>
           </div>
         </div>
+
+        <!-- todo: (TIME) STOPPER -->
+        <div class="col">
+          <Stopper :heat-row="heatRow"/>
+        </div>
+
+        <!-- todo: (HEAT) ATHLETE EVENT DETAILS -->
+<!--        <div class="col">-->
+<!--          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>-->
+
+<!--          <div v-for="athleteEvent in heatRow.athleteEvents">-->
+<!--            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}-->
+<!--            <font-awesome-icon icon="fa-solid fa-pen-to-square" v-on:click="editAthleteEvent(athleteEvent)"/>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
 
+
+    <!-- todo: EDIT ATHLETE EVENT FORM -->
     <div v-if="divDisplayEditAthleteEvent">
       <select v-model="selectedAthleteId">
         <option value="" disabled="true" selected="true">choose stroke</option>
-        <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{ athleteInfo.athleteName }}</option>
+        <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{
+            athleteInfo.athleteName
+          }}
+        </option>
       </select>
       <select class="rounded" style="width: 150px; border-color: white"
               v-model="selectedStrokeTypeId">
@@ -58,15 +79,17 @@
     </div>
     <br><br><br>
 
-
   </div>
 
 </template>
 
 <script>
+import Stopper from "@/components/dashboard/stopper/Stopper";
+import NameButton from "@/components/dashboard/name-button/NameButton";
+
 export default {
   name: "EventView",
-  components: {},
+  components: {NameButton, Stopper},
 
   data: function () {
     return {
@@ -89,27 +112,30 @@ export default {
           type: ''
         }
       ],
-      eventInfoResponse: {
+      stopperDashboard: {
+        numberOfLanes: 0,
         heatRows: [
           {
+            uuid: '',
             heatNumber: 0,
             hasStarted: false,
-            heatStatus: "Start",
-            heatStartTimeStamp: '',
+            hasFinished: false,
+            heatButtonStatus: '',
+            heatStartTimeMilliseconds: 0,
             athleteEvents: [
               {
                 athleteId: 0,
                 athleteEventId: 0,
                 athleteEventLength: 0,
-                athleteName: 'string',
+                athleteName: '',
                 strokeId: 0,
-                strokeType: 'string',
+                strokeType: '',
                 hasStarted: true,
-                startTime: '2022-09-16T23:10:23.409Z',
-                lastSplitTime: '2022-09-16T23:10:23.409Z',
+                startTime: '',
+                lastSplitTime: '',
                 lastSplitLength: 0,
                 hasFinished: true,
-                finishTime: '2022-09-16T23:10:23.409Z'
+                finishTime: ''
               }
             ]
           }
@@ -125,7 +151,7 @@ export default {
             }
           }
       ).then(response => {
-        this.eventInfoResponse = response.data
+        this.stopperDashboard = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -157,7 +183,7 @@ export default {
         console.log(error)
       })
     },
-    editAthleteEvent: function (athleteEvent) {
+    editClick: function (athleteEvent) {
       this.divDisplayMainTable = false
       this.divDisplayEditAthleteEvent = true
       this.selectedStrokeTypeId = athleteEvent.strokeId
@@ -203,6 +229,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>

@@ -1,0 +1,72 @@
+/* icon klasside üle kirjutamine */
+.fa-arrow-rotate-left {
+    color: crimson;
+}
+
+.fa-arrow-rotate-left:hover {
+    color: red;
+    font-size: 20px
+}
+
+.fa-pen-to-square:hover {
+    color: darkorange;
+}
+
+/* enda välja mõeldud klassid, sisu copy-paste bootstrapi pealt
+    css stiililegit laetakse jooksvalt
+    !important; on käsk mis sõidab üle mistahes varasematest stiililehe kujundustest
+ */
+.name-button-initial {
+    --bs-btn-color: #fff !important;
+    --bs-btn-bg: #198754 !important;
+    --bs-btn-border-color: #198754 !important;
+    --bs-btn-hover-color: #fff !important;
+    --bs-btn-hover-bg: #157347 !important;
+    --bs-btn-hover-border-color: #146c43 !important;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110 !important;
+    --bs-btn-active-color: #fff !important;
+    --bs-btn-active-bg: #146c43 !important;
+    --bs-btn-active-border-color: #13653f !important;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125) !important;
+    --bs-btn-disabled-color: #fff !important;
+    --bs-btn-disabled-bg: #198754 !important;
+    --bs-btn-disabled-border-color: #198754 !important;
+}
+
+.name-button-started {
+    --bs-btn-color: #000 !important;
+    --bs-btn-bg: #ffc107 !important;
+    --bs-btn-border-color: #ffc107 !important;
+    --bs-btn-hover-color: #000 !important;
+    --bs-btn-hover-bg: #ffca2c !important;
+    --bs-btn-hover-border-color: #ffc720 !important;
+    --bs-btn-focus-shadow-rgb: 217, 164, 6 !important;
+    --bs-btn-active-color: #000 !important;
+    --bs-btn-active-bg: #ffcd39 !important;
+    --bs-btn-active-border-color: #ffc720 !important;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125) !important;
+    --bs-btn-disabled-color: #000 !important;
+    --bs-btn-disabled-bg: #ffc107 !important;
+    --bs-btn-disabled-border-color: #ffc107 !important;
+}
+
+
+.name-button-finished {
+    --bs-btn-color: #fff !important;
+    --bs-btn-bg: #dc3545 !important;
+    --bs-btn-border-color: #dc3545 !important;
+    --bs-btn-hover-color: #fff !important;
+    --bs-btn-hover-bg: #bb2d3b !important;
+    --bs-btn-hover-border-color: #b02a37 !important;
+    --bs-btn-focus-shadow-rgb: 225, 83, 97 !important;
+    --bs-btn-active-color: #fff !important;
+    --bs-btn-active-bg: #b02a37 !important;
+    --bs-btn-active-border-color: #a52834 !important;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125) !important;
+    --bs-btn-disabled-color: #fff !important;
+    --bs-btn-disabled-bg: #dc3545 !important;
+    --bs-btn-disabled-border-color: #dc3545 !important;
+}
+
+
+
