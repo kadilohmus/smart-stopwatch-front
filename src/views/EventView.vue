@@ -1,61 +1,47 @@
 <template>
   <div>
 
-    <div style="float: right">
-      <router-link to="/settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to Settings
-      </router-link>
-      <br>
-    </div>
-    <br>
-
-
-    <h1 class="text-center">Event</h1><br>
+    <DashboardHeader/>
 
     <div class="container p-3 mb-2 bg-secondary text-white" v-if="divDisplayMainTable">
-      <!-- todo: (ÜKS RIDA) -->
+
+      <!-- todo: (LOOPIME RIDASID) -->
       <div class="row" v-for="heatRow in stopperDashboard.heatRows" :key="heatRow.uuid">
 
-        <!-- todo: (START/STOP) -->
-        <div class="col">
-          <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="startStopAction(heatRow)">
-            {{ heatRow.heatButtonStatus }}
-          </button>
-        </div>
+        <StartStopButton :heat-row="heatRow"
+                         @startHeatClickEvent="startHeatClick(heatRow)"
 
-        <!-- todo: (NAMED BUTTONS) -->
+        />
+
+        <!-- todo: (NIMELISED NUPUD) -->
         <div class="col" v-for="athleteEvent in heatRow.athleteEvents">
-          <div class="row">
-            <NameButton :athlete-event="athleteEvent"
-                        @splitClickEvent="splitClick(athleteEvent)"
-                        @editClickEvent="editClick(athleteEvent)"
-                        @undoClickEvent="undoClickEvent(athleteEvent)"
-            />
-          </div>
-          <div class="row">
-            <p class="text-center">{{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}</p>
-          </div>
+          <NameButton :athlete-event="athleteEvent"
+                      @splitClickEvent="splitClick(athleteEvent)"
+                      @editClickEvent="editAthleteEvent(athleteEvent)"
+                      @undoClickEvent="undoClickEvent(athleteEvent)"
+          />
+          <AthleteSettings :athlete-event="athleteEvent"/>
         </div>
 
         <!-- todo: (TIME) STOPPER -->
-        <div class="col">
-          <Stopper :heat-row="heatRow"/>
-        </div>
-
-        <!-- todo: (HEAT) ATHLETE EVENT DETAILS -->
-        <!--        <div class="col">-->
-        <!--          <h3 style="color: black">Heat {{ heatRow.heatNumber }}</h3>-->
-
-        <!--          <div v-for="athleteEvent in heatRow.athleteEvents">-->
-        <!--            {{ athleteEvent.athleteName }} {{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}-->
-        <!--            <font-awesome-icon icon="fa-solid fa-pen-to-square" v-on:click="editAthleteEvent(athleteEvent)"/>-->
-        <!--          </div>-->
-        <!--        </div>-->
+        <Stopper :heat-row="heatRow"/>
       </div>
     </div>
 
 
+
+
+
+
+
+
+
+
+    <!-- todo: KOGU SEE JAMA OLEKS VAJA ERALDI VAATELE VIIA -->
     <!-- todo: EDIT ATHLETE EVENT FORM -->
     <div v-if="divDisplayEditAthleteEvent">
+
+      <div>
       <select v-model="selectedAthleteId">
         <option value="" disabled="true" selected="true">choose stroke</option>
         <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{
@@ -63,6 +49,8 @@
           }}
         </option>
       </select>
+      </div>
+
       <select class="rounded" style="width: 150px; border-color: white"
               v-model="selectedStrokeTypeId">
         <option value="" disabled="true" selected="true">choose stroke</option>
@@ -83,6 +71,8 @@
     </div>
     <br><br><br>
 
+
+
   </div>
 
 </template>
@@ -90,10 +80,13 @@
 <script>
 import Stopper from "@/components/dashboard/stopper/Stopper";
 import NameButton from "@/components/dashboard/name-button/NameButton";
+import AthleteSettings from "@/views/AthleteSettings";
+import StartStopButton from "@/components/dashboard/start-stop-buttton/StartStopButton";
+import DashboardHeader from "@/views/DashboardHeader";
 
 export default {
   name: "EventView",
-  components: {NameButton, Stopper},
+  components: {DashboardHeader, StartStopButton, AthleteSettings, NameButton, Stopper},
 
   data: function () {
     return {
@@ -161,66 +154,35 @@ export default {
         console.log(error)
       })
     },
-    startStopAction: function (heatRow) {
-      console.log('OLEN SIIN')
-      // todo: võib olla start event või stopp event
-      if (heatRow.hasStarted) {
-        // todo: reset stop teenus
-      } else {
-        this.startHeat(heatRow.heatNumber)
-      }
-    },
 
-    startHeat: function (heatNumber) {
+    startHeatClick: function (heatRow) {
       this.$http.post("/event", null, {
             params: {
               eventId: this.eventId,
-              heatNumber: heatNumber
-
+              heatNumber: heatRow.heatNumber
             }
           }
       ).then(response => {
         this.getEventInfo()
-        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
+
     splitClick: function (athleteEvent) {
-      alert("SPLIT CLICK EVENT " + athleteEvent.athleteName)
-      this.$http.post("/event", null, {
-            params: {
-              athleteEventId: athleteEvent.athleteEventId
-            }
-          }
-      ).then(response => {
-        this.getEventInfo()
-      }).catch(error => {
-        console.log(error)
-      })
+      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
+      alert("SPLIT click event " + athleteEvent.athleteName)
     },
-    editClick: function (athleteEvent) {
-      alert("EDIT CLICK EVENT " + athleteEvent.athleteName)
-
-      this.divDisplayMainTable = false
-      this.divDisplayEditAthleteEvent = true
-      this.selectedStrokeTypeId = athleteEvent.strokeId
-      this.selectedEventLength = athleteEvent.athleteEventLength
-      this.selectedAthleteId = athleteEvent.athleteId
-
-      if (athleteEvent.athleteId == null) {
-        this.selectedAthleteId = ''
-        this.divDisplayDefaultAthleteOption = true
-      }
+    editAthleteEvent: function (athleteEvent) {
+      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
+      alert("EDIT athlete event " + athleteEvent.athleteName)
     },
     undoClickEvent: function (athleteEvent) {
-      alert("EDIT UNDO CLICK EVENT " + athleteEvent.athleteName)
+      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
+      alert("UNDO click event " + athleteEvent.athleteName)
     },
-    cancelEditAthleteEvent: function () {
-      this.divDisplayMainTable = true
-      this.divDisplayEditAthleteEvent = false
 
-    },
+    // todo: SEE KÕIK ERALDI VAATESSE ÄRA VIIA
     findAllStrokes: function () {
       this.$http.get("/setup/stroke")
           .then(response => {

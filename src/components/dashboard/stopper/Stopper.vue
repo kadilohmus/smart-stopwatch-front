@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="col">
     <h2>Time</h2>
       <span class="time">{{ time }}</span>
   </div>

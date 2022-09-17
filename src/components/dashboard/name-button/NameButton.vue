@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="row">
     <div v-if="!athleteEvent.hasStarted && !athleteEvent.hasFinished">
       <NameButtonInitial :athlete-event="athleteEvent"
-                         @splitClickEvent="splitClick(athleteEvent)"
-                         @editClickEvent="editClick(athleteEvent)"/>
+                         @splitClickEvent="splitClick"
+                         @editClickEvent="editAthleteEvent"/>
     </div>
     <div v-else-if="athleteEvent.hasStarted && !athleteEvent.hasFinished">
       <NameButtonStarted :athlete-event="athleteEvent"
-                         @splitClickEvent="splitClick(athleteEvent)"
-                         @undoClickEvent="undoAthleteEvent(athleteEvent)"/>
+                         @splitClickEvent="splitClick"
+                         @undoClickEvent="undoAthleteEvent"/>
     </div>
     <div v-else>
       <NameButtonFinished :athlete-event="athleteEvent"
-                          @undoClickEvent="undoAthleteEvent(athleteEvent)"/>
+                          @undoClickEvent="undoAthleteEvent"/>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
     splitClick: function () {
       this.$emit('splitClickEvent')
     },
-    editClick: function () {
+    editAthleteEvent: function () {
       this.$emit('editClickEvent')
     },
     undoAthleteEvent: function () {
