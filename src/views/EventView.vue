@@ -145,23 +145,6 @@ export default {
   },
   methods: {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     getEventInfo: function () {
       this.$http.get("/stopper/dashboard", {
             params: {
