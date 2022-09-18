@@ -11,17 +11,15 @@
       <div class="row" v-for="heatRow in stopperDashboard.heatRows" :key="heatRow.uuid">
 
         <StartStopButton :heat-row="heatRow"
-                         @startHeatClickEvent="startHeatClick(heatRow)"
-                         @stopHeatClickEvent="stopHeatClick(heatRow)"
-
+                         @startHeatClickEvent="getDashboardInfo"
+                         @stopHeatClickEvent="getDashboardInfo"
         />
 
         <!-- todo: (NIMELISED NUPUD) -->
         <div class="col" v-for="athleteEvent in heatRow.athleteEvents">
           <NameButton :athlete-event="athleteEvent"
-                      @splitClickEvent="splitClick(athleteEvent)"
-                      @editClickEvent="editAthleteEvent(athleteEvent)"
-                      @undoClickEvent="undoClickEvent(athleteEvent)"
+                      @splitClickEvent="getDashboardInfo"
+                      @undoClickEvent="getDashboardInfo"
           />
           <AthleteSettings :athlete-event="athleteEvent"/>
         </div>
@@ -32,48 +30,39 @@
     </div>
 
 
-
-
-
-
-
-
-
-
     <!-- todo: KOGU SEE JAMA OLEKS VAJA ERALDI VAATELE VIIA -->
     <!-- todo: EDIT ATHLETE EVENT FORM -->
-    <div v-if="divDisplayEditAthleteEvent">
+<!--    <div v-if="divDisplayEditAthleteEvent">-->
 
-      <div>
-      <select v-model="selectedAthleteId">
-        <option value="" disabled="true" selected="true">choose stroke</option>
-        <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{
-            athleteInfo.athleteName
-          }}
-        </option>
-      </select>
-      </div>
+<!--      <div>-->
+<!--        <select v-model="selectedAthleteId">-->
+<!--          <option value="" disabled="true" selected="true">choose stroke</option>-->
+<!--          <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{-->
+<!--              athleteInfo.athleteName-->
+<!--            }}-->
+<!--          </option>-->
+<!--        </select>-->
+<!--      </div>-->
 
-      <select class="rounded" style="width: 150px; border-color: white"
-              v-model="selectedStrokeTypeId">
-        <option value="" disabled="true" selected="true">choose stroke</option>
-        <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>
-      </select>
-      <input type="text" placeholder="meters" v-model="selectedEventLength">
-      <br>
-      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAthleteEvent">
-        Cancel
-      </button>
-      <button type="button" style="margin: 5px" class="btn btn-dark">
-        Update
-      </button>
-      <!--      todo: update meetod-->
-      <button type="button" style="margin: 5px" class="btn btn-dark">
-        Create athlete
-      </button>
-    </div>
-    <br><br><br>
-
+<!--      <select class="rounded" style="width: 150px; border-color: white"-->
+<!--              v-model="selectedStrokeTypeId">-->
+<!--        <option value="" disabled="true" selected="true">choose stroke</option>-->
+<!--        <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>-->
+<!--      </select>-->
+<!--      <input type="text" placeholder="meters" v-model="selectedEventLength">-->
+<!--      <br>-->
+<!--      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAthleteEvent">-->
+<!--        Cancel-->
+<!--      </button>-->
+<!--      <button type="button" style="margin: 5px" class="btn btn-dark">-->
+<!--        Update-->
+<!--      </button>-->
+<!--      &lt;!&ndash;      todo: update meetod&ndash;&gt;-->
+<!--      <button type="button" style="margin: 5px" class="btn btn-dark">-->
+<!--        Create athlete-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <br><br><br>-->
 
 
   </div>
@@ -96,7 +85,7 @@ export default {
       divDisplayMainTable: true,
       divDisplayEditAthleteEvent: false,
       divDisplayDefaultAthleteOption: false,
-      eventId: sessionStorage.getItem('eventId'),
+      eventId: 2,
       selectedEventLength: 0,
       selectedAthleteId: 0,
       selectedStrokeTypeId: 0,
@@ -145,10 +134,10 @@ export default {
   },
   methods: {
 
-    getEventInfo: function () {
+    getDashboardInfo: function () {
       this.$http.get("/stopper/dashboard", {
             params: {
-              eventId: 1
+              eventId: this.eventId
             }
           }
       ).then(response => {
@@ -159,83 +148,34 @@ export default {
       })
     },
 
-    startHeatClick: function (heatRow) {
-      alert("START heat event ")
-      this.$http.post("/event", null, {
-            params: {
-              eventId: this.eventId,
-              heatNumber: heatRow.heatNumber
-            }
-          }
-      ).then(response => {
-        this.getEventInfo()
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-
-    stopHeatClick: function (heatRow) {
-      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
-      alert("STOP heat event ")
-    },
-
-    splitClick: function (athleteEvent) {
-      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
-      alert("SPLIT click event " + athleteEvent.athleteName)
-    },
-    editAthleteEvent: function (athleteEvent) {
-      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
-      alert("EDIT athlete event " + athleteEvent.athleteName)
-    },
-    undoClickEvent: function (athleteEvent) {
-      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis
-      alert("UNDO click event " + athleteEvent.athleteName)
-    },
-
-
-
-
-
-
-
-
 
 
     // todo: SEE KÕIK ERALDI VAATESSE ÄRA VIIA
-    findAllStrokes: function () {
-      this.$http.get("/setup/stroke")
-          .then(response => {
-            this.strokeDtos = response.data
-          }).catch(error => {
-        console.log(error)
-      })
-    },
-    findAllAthletes: function () {
-      this.$http.get("/setup/all-athlete", {
-            params: {
-              userId: 1
-            }
-          }
-      ).then(response => {
-        this.athleteInfos = response.data
-      }).catch(error => {
-        console.log(error)
-      })
-    }
-
-
-
-
-
-
-
+    // getAllStrokesDropdownInfo: function () {
+    //   this.$http.get("/setup/stroke")
+    //       .then(response => {
+    //         this.strokeDtos = response.data
+    //       }).catch(error => {
+    //     console.log(error)
+    //   })
+    // },
+    // getAllAthletesDropdownInfo: function () {
+    //   this.$http.get("/setup/all-athlete", {
+    //         params: {
+    //           userId: 1
+    //         }
+    //       }
+    //   ).then(response => {
+    //     this.athleteInfos = response.data
+    //   }).catch(error => {
+    //     console.log(error)
+    //   })
+    // }
 
 
   },
   mounted() {
-    this.getEventInfo()
-    this.findAllStrokes()
-    this.findAllAthletes()
+    this.getDashboardInfo()
   }
 }
 </script>

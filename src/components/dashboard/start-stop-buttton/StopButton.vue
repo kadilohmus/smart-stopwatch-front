@@ -14,7 +14,10 @@ export default {
   },
   methods: {
     stopHeatClick: function () {
-      this.$emit('stopHeatClickEvent', this.heatRow)
+      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis!!!!!
+      alert("STOP heat event ")
+      // only then success response (then blokk)
+      this.$emit('stopHeatClickEvent')
     }
   }
 }

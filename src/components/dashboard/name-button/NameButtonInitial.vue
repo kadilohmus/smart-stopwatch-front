@@ -1,9 +1,8 @@
 <template>
   <div>
-    <button type="button" style="margin: 5px" class="btn btn-success btn-lg name-button-initial" v-on:click="splitClick(athleteEvent)">
+    <button type="button" style="margin: 5px" class="btn btn-success btn-lg name-button-initial" v-on:click="editAthleteEvent(athleteEvent)">
       {{ athleteEvent.athleteName }}
     </button>
-    <font-awesome-icon icon="fa-solid fa-pen-to-square" v-on:click="editAthleteEvent(athleteEvent)"/>
   </div>
 </template>
 <script>
@@ -13,11 +12,9 @@ export default {
     athleteEvent: {}
   },
   methods: {
-    splitClick: function () {
-      this.$emit('splitClickEvent')
-    },
+    // todo: vajab implementeerimist
     editAthleteEvent: function () {
-      this.$emit('editClickEvent')
+      // push to view, kus saab kasutaja andmeid muuta
     }
   }
 }

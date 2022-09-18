@@ -21,11 +21,11 @@ export default {
     heatRow: {}
   },
   methods: {
-    startHeatClick: function (heatRow) {
-      this.$emit('startHeatClickEvent', heatRow)
+    startHeatClick: function () {
+      this.$emit('startHeatClickEvent')
     },
-    stopHeatClick: function (heatRow) {
-      this.$emit('stopHeatClickEvent', heatRow)
+    stopHeatClick: function () {
+      this.$emit('stopHeatClickEvent')
     }
   }
 }

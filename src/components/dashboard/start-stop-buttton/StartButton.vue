@@ -16,7 +16,18 @@ export default {
   },
   methods: {
     startHeatClick: function () {
-      this.$emit('startHeatClickEvent', this.heatRow)
+      alert("START heat event ")
+      this.$http.post("/event", null, {
+            params: {
+              eventId: this.eventId,
+              heatNumber: heatRow.heatNumber
+            }
+          }
+      ).then(response => {
+        this.$emit('startHeatClickEvent')
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
