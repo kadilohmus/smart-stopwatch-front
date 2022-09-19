@@ -4,9 +4,11 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from "@/views/RegisterView";
 import MenuView from "@/views/MenuView";
 import AdminView from "@/views/AdminView";
-import SettingsView from "@/views/SettingsView";
 import SearchView from "@/views/SearchView";
 import EventView from "@/views/EventView";
+import GlobalSettingsView from "@/views/GlobalSettingsView";
+import AthleteSettingsView from "@/views/AthleteSetupView";
+import AthleteSetupView from "@/views/AthleteSetupView";
 
 Vue.use(VueRouter)
 
@@ -32,9 +34,9 @@ const routes = [
     component: MenuView
   },
   {
-    path: '/settings',
-    name: 'settingsRoute',
-    component: SettingsView
+    path: '/global-settings',
+    name: 'globalSettingsRoute',
+    component: GlobalSettingsView
   },
   {
     path: '/search',
@@ -45,7 +47,12 @@ const routes = [
     path: '/event',
     name: 'eventRoute',
     component: EventView
-  }
+  },
+  {
+    path: '/athlete-setup',
+    name: 'athleteSetupRoute',
+    component: AthleteSetupView
+  },
 ]
 
 const router = new VueRouter({

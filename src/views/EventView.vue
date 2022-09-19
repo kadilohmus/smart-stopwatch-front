@@ -28,43 +28,6 @@
         <Stopper :heat-row="heatRow"/>
       </div>
     </div>
-
-
-    <!-- todo: KOGU SEE JAMA OLEKS VAJA ERALDI VAATELE VIIA -->
-    <!-- todo: EDIT ATHLETE EVENT FORM -->
-<!--    <div v-if="divDisplayEditAthleteEvent">-->
-
-<!--      <div>-->
-<!--        <select v-model="selectedAthleteId">-->
-<!--          <option value="" disabled="true" selected="true">choose stroke</option>-->
-<!--          <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{-->
-<!--              athleteInfo.athleteName-->
-<!--            }}-->
-<!--          </option>-->
-<!--        </select>-->
-<!--      </div>-->
-
-<!--      <select class="rounded" style="width: 150px; border-color: white"-->
-<!--              v-model="selectedStrokeTypeId">-->
-<!--        <option value="" disabled="true" selected="true">choose stroke</option>-->
-<!--        <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>-->
-<!--      </select>-->
-<!--      <input type="text" placeholder="meters" v-model="selectedEventLength">-->
-<!--      <br>-->
-<!--      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="cancelEditAthleteEvent">-->
-<!--        Cancel-->
-<!--      </button>-->
-<!--      <button type="button" style="margin: 5px" class="btn btn-dark">-->
-<!--        Update-->
-<!--      </button>-->
-<!--      &lt;!&ndash;      todo: update meetod&ndash;&gt;-->
-<!--      <button type="button" style="margin: 5px" class="btn btn-dark">-->
-<!--        Create athlete-->
-<!--      </button>-->
-<!--    </div>-->
-<!--    <br><br><br>-->
-
-
   </div>
 
 </template>
@@ -72,13 +35,13 @@
 <script>
 import Stopper from "@/components/dashboard/stopper/Stopper";
 import NameButton from "@/components/dashboard/name-button/NameButton";
-import AthleteSettings from "@/views/AthleteSettings";
 import StartStopButton from "@/components/dashboard/start-stop-buttton/StartStopButton";
 import DashboardHeader from "@/views/DashboardHeader";
+import AthleteSettings from "@/components/dashboard/name-button/AthleteSettings";
 
 export default {
   name: "EventView",
-  components: {DashboardHeader, StartStopButton, AthleteSettings, NameButton, Stopper},
+  components: {AthleteSettings, DashboardHeader, StartStopButton, NameButton, Stopper},
 
   data: function () {
     return {
@@ -146,33 +109,7 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-    },
-
-
-
-    // todo: SEE KÕIK ERALDI VAATESSE ÄRA VIIA
-    // getAllStrokesDropdownInfo: function () {
-    //   this.$http.get("/setup/stroke")
-    //       .then(response => {
-    //         this.strokeDtos = response.data
-    //       }).catch(error => {
-    //     console.log(error)
-    //   })
-    // },
-    // getAllAthletesDropdownInfo: function () {
-    //   this.$http.get("/setup/all-athlete", {
-    //         params: {
-    //           userId: 1
-    //         }
-    //       }
-    //   ).then(response => {
-    //     this.athleteInfos = response.data
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-    // }
-
-
+    }
   },
   mounted() {
     this.getDashboardInfo()

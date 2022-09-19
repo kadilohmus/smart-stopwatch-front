@@ -13,8 +13,9 @@ export default {
   },
   methods: {
     // todo: vajab implementeerimist
-    editAthleteEvent: function () {
-      // push to view, kus saab kasutaja andmeid muuta
+    editAthleteEvent: function (athleteEvent) {
+      this.$router.push({name: 'athleteSetupRoute', query: {athleteEventId: athleteEvent.athleteEventId, athleteId: athleteEvent.athleteId}})
+
     }
   }
 }

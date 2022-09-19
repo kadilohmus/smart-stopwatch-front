@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="float: right">
-      <router-link to="/settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to Settings
+      <router-link to="/global-settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to Settings
       </router-link>
       <br>
     </div>

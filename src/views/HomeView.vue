@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <Login title="Log in"/>
-    <icon icon="lock" />
 
   </div>
 </template>

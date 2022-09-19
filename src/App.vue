@@ -5,7 +5,7 @@
       <router-link to="/register">Register</router-link> |
       <router-link to="/admin">Admin</router-link> |
       <router-link to="/menu">Menu</router-link> |
-      <router-link to="/settings">Settings</router-link> |
+      <router-link to="/global-settings">Global settings</router-link> |
       <router-link to="/event">Event</router-link> |
       <router-link to="/search">Search</router-link>
     </nav>
@@ -41,3 +41,7 @@ body {
 }
 
 </style>
+<script>export default {
+  components: {}
+}
+</script>
