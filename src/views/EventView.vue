@@ -4,6 +4,7 @@
     <!-- todo: (TIITEL JA BACK TO SETTINGS NUPP) -->
     <DashboardHeader/>
 
+
     <!-- todo: (HALL KAST) -->
     <div class="container p-3 mb-2 bg-secondary text-white" v-if="divDisplayMainTable">
 
@@ -28,6 +29,11 @@
         <Stopper :heat-row="heatRow"/>
       </div>
     </div>
+    <div>
+    <router-link to="/global-settings" style="margin: 30px" class="btn btn-outline-light" tag="button">Back to
+      Settings
+    </router-link>
+  </div>
   </div>
 
 </template>

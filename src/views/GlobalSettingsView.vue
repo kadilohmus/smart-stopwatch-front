@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <br>
-      <h1 style="color: black">Global settings</h1><br><br>
+      <br><br>
+      <h1>Global settings</h1><br><br>
       <AlertError :errorMessage="errorMessage"/>
     </div>
     <div class="container" style="float: right">
-      <table class="table table-borderless" style="width: 70%">
+      <table class="table table-borderless" style="width: 80%">
         <thead>
         <tr>
           <th style="width: 20%" scope="col"></th>
@@ -16,24 +16,24 @@
         </thead>
         <tbody>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Pool split</p></td>
+          <td><p style="color: white; font-weight: bold">Pool split</p></td>
           <td><select class="rounded" style="width: 90px; border-color: white"
                       v-model="settingRequest.splitLengthId">
 <!--            <option value="" selected="true" disabled>meters</option>-->
             <option v-for=" split in splitDtos" :value="split.id">{{ split.meters }}</option>
-          </select> meters</td>
-          <td rowspan="7"><button type="button" style="margin-bottom: 10px; width: 150px; height: 150px" class="btn btn-dark" v-on:click="createGlobalSettings">Create event
+          </select><a style="color: white"> meters</a></td>
+          <td rowspan="7"><button type="button" style="margin-bottom: 10px; width: 150px; height: 150px" class="btn btn-outline-light" v-on:click="createGlobalSettings">Create event
           </button>
-            <br><router-link to="/menu" style="margin-top: 10px; width: 150px; height: 150px" class="btn btn-outline-light" tag="button">Back to Menu
+            <br><router-link to="/menu" style="margin-top: 10px; width: 150px; height: 150px" class="btn btn-outline-danger" tag="button">Back to Menu
           </router-link></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Distance</p></td>
+          <td><p style="color: white; font-weight: bold">Distance</p></td>
           <td><input type=number class="rounded" style="width: 60px; border-color: white"
-                     v-model="settingRequest.eventLength"> meters<br></td>
+                     v-model="settingRequest.eventLength"><a style="color: white"> meters</a><br></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Stroke</p></td>
+          <td><p style="color: white; font-weight: bold">Stroke</p></td>
           <td><select class="rounded" style="width: 150px; border-color: white"
                       v-model="settingRequest.strokeId">
 <!--            <option value="" disabled="true" selected="true">choose stroke</option>-->
@@ -41,17 +41,17 @@
           </select></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Number of athletes</p></td>
+          <td><p style="color: white; font-weight: bold">Number of athletes</p></td>
           <td><input type=number class="rounded" style="width: 60px; border-color: white"
                      v-model="settingRequest.numberOfAthletes"></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Number of lanes</p></td>
+          <td><p style="color: white; font-weight: bold">Number of lanes</p></td>
           <td><input type=number class="rounded" style="width: 60px; border-color: white"
                      v-model="settingRequest.numberOfLanes"></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Number of heats</p></td>
+          <td><p style="color: white; font-weight: bold">Number of heats</p></td>
           <td><input type=number class="rounded" style="width: 60px; border-color: white"
                      v-model="settingRequest.numberOfHeats"></td>
         </tr>

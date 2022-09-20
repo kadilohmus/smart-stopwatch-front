@@ -2,13 +2,13 @@
   <div>
     <AlertError :errorMessage="alertError"/>
     <AlertWarning :warningMessage="alertWarning"/>
-    <div class="border border; container" style="border-radius: 50px; width: 400px; height: 310px">
-      <br>
+    <div class="container">
+      <br><br>
       <h1>Search athlete</h1><br>
       <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Name" v-model="name"><br><br>
-      <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="findAthleteByName">Search</button>
+      <button type="button" style="margin: 5px" class="btn btn-outline-light btn-lg" v-on:click="findAthleteByName">Search</button>
       <br>
-      <router-link to="/menu" style="margin: 25px" class="btn btn-outline-light" tag="button">Back to Menu</router-link>
+      <router-link to="/menu" style="margin: 25px" class="btn btn-outline-danger" tag="button">Back to Menu</router-link>
     </div>
   </div>
 </template>

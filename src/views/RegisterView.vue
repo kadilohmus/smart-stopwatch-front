@@ -1,8 +1,8 @@
 <template>
   <div>
     <AlertError :errorMessage="alertError"/>
-    <div class="border border; container" style="border-radius: 50px; width: 400px; height: 380px">
-      <br>
+    <div class="container">
+      <br><br>
       <h1>Create an account</h1><br>
       <input type="text" class="rounded" style="margin: 5px; border-color: white" placeholder="Username"
              v-model="userRequest.userName"><br>
@@ -10,7 +10,7 @@
              v-model="userRequest.password"><br>
       <input type="password" class="rounded" style="margin: 5px; border-color: white" placeholder="Re-type password"
              v-model="userRequest.passwordRetype"><br><br>
-      <button type="button" style="margin: 5px" class="btn btn-dark btn-lg" v-on:click="registerNewUser">Create</button>
+      <button type="button" style="margin: 5px" class="btn btn-outline-light btn-lg" v-on:click="registerNewUser">Create</button>
       <br><br>
       <router-link to="/" style="color: white">Already have an account? Log in!</router-link>
     </div>

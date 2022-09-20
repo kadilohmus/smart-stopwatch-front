@@ -1,15 +1,17 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/admin">Admin</router-link> |
-      <router-link to="/menu">Menu</router-link> |
-      <router-link to="/global-settings">Global settings</router-link> |
-      <router-link to="/event">Event</router-link> |
-      <router-link to="/search">Search</router-link>
-    </nav>
-    <router-view/>
+  <div>
+    <div id="app" class="header">
+      <div class="header-left">
+        <router-link to="/">Home</router-link>
+        <router-link to="/menu">Menu</router-link>
+        <router-link to="/global-settings">Global settings</router-link>
+        <router-link to="/event">Event</router-link>
+        <router-link to="/search">Search</router-link>
+      </div>
+    </div>
+    <div id="app">
+       <router-view/>
+     </div>
   </div>
 </template>
 
@@ -35,7 +37,7 @@ nav a.router-link-exact-active {
   color: #ffffff;
 }
 body {
-  background: url("/src/assets/taust.jpg");
+  background: url("/src/assets/taust3.jpg");
   background-attachment: fixed;
   background-size: cover;
 }

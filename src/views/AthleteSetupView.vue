@@ -1,9 +1,9 @@
 <template>
   <div>
-    <br>
-    <h1>Athlete event settings</h1><br>
+    <br><br>
+    <h1>Athlete event settings</h1><br><br>
     <div class="container" style="float: right">
-      <table class="table table-borderless" style="width: 60%">
+      <table class="table table-borderless" style="width: 70%">
         <thead>
         <tr>
           <th style="width: 10%" scope="col"></th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Athlete</p></td>
+          <td><p style="color: white; font-weight: bold">Athlete</p></td>
           <td>
             <select class="rounded" style="width: 150px; border-color: white" v-model="athleteSetupRequest.athleteId">
             <option value="" disabled="true" selected="true">choose athlete</option>
@@ -23,21 +23,21 @@
           </select>
           </td>
           <td rowspan="3">
-            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="updateAthleteEvent">Update</button>
-            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="toggleDisplayAddAthleteTable">Create new athlete</button>
-            <button type="button" style="margin: 5px" class="btn btn-outline-dark" v-on:click="cancelEditAthleteEvent">Cancel</button>
+            <button type="button" style="margin: 5px" class="btn btn-outline-light" v-on:click="updateAthleteEvent">Update</button>
+            <button type="button" style="margin: 5px" class="btn btn-outline-light" v-on:click="toggleDisplayAddAthleteTable">Create new athlete</button>
+            <button type="button" style="margin: 5px" class="btn btn-outline-danger" v-on:click="cancelEditAthleteEvent">Cancel</button>
           </td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Stroke</p></td>
+          <td><p style="color: white; font-weight: bold">Stroke</p></td>
           <td><select class="rounded" style="width: 150px; border-color: white" v-model="athleteSetupRequest.strokeId">
             <option value="" disabled="true" selected="true">choose stroke</option>
             <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>
           </select></td>
         </tr>
         <tr align="left">
-          <td><p style="color: black; font-weight: bold">Distance</p></td>
-          <td><input type="number" class="rounded" style="width: 60px; border-color: white" v-model="athleteSetupRequest.eventLength"> meters</td>
+          <td><p style="color: white; font-weight: bold">Distance</p></td>
+          <td><input type="number" class="rounded" style="width: 60px; border-color: white" v-model="athleteSetupRequest.eventLength"><a style="color: white"> meters</a></td>
         </tr>
         </tbody>
       </table>
@@ -46,7 +46,7 @@
     <br>
     <div class="container" style="float: right" v-if="divDisplayAddAthleteTable">
 
-      <table class="table table-borderless" style="width: 60%">
+      <table class="table table-borderless" style="width: 70%">
         <thead>
         <tr>
           <th style="width: 10%" scope="col"></th>
@@ -57,10 +57,10 @@
         </thead>
         <tbody>
         <tr align="left" >
-          <td><p style="color: black; font-weight: bold">Name</p></td>
+          <td><p style="color: white; font-weight: bold">Name</p></td>
           <td><input type="text" class="rounded" style="width: 160px; border-color: white" v-model="addAthleteRequest.name"></td>
           <td>
-            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="createNewAthlete">Create</button>
+            <button type="button" style="margin: 5px" class="btn btn-outline-light" v-on:click="createNewAthlete">Create</button>
             </td>
         </tr>
         </tbody>
