@@ -14,13 +14,17 @@ export default {
   props: {
     heatRow: {}
   },
+  data: function () {
+    return {
+      eventId: sessionStorage.getItem('eventId')
+    }
+  },
   methods: {
     startHeatClick: function () {
-      alert("START heat event ")
-      this.$http.post("/event", null, {
+      this.$http.post("/stopper/start", null, {
             params: {
               eventId: this.eventId,
-              heatNumber: heatRow.heatNumber
+              heatNumber: this.heatRow.heatNumber
             }
           }
       ).then(response => {

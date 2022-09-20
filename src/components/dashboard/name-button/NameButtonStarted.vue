@@ -13,22 +13,30 @@ export default {
     athleteEvent: {}
   },
   methods: {
-    // see meetod on vaja ära implementeerida
-    // POST /stopper/split
     splitClick: function () {
-      alert("SPLIT click event " + this.athleteEvent.athleteName)
-
-      // peale õnnelikku responset saata välja emit event
-      this.$emit('splitClickEvent')
+      this.$http.post("/stopper/split", null, {
+        params: {
+          athleteEventId: this.athleteEvent.athleteEventId
+        }
+          }
+      ).then(response => {
+        this.$emit('splitClickEvent')
+      }).catch(error => {
+        console.log(error)
+      })
     },
-
-    // see meetod on vaja ära implementeerida
-    // PATCH /stopper/undo
     undoClick: function () {
-      alert("UNDO click event " + this.athleteEvent.athleteName)
-
-      // peale õnnelikku responset saata välja emit event
-      this.$emit('undoClickEvent')
+      this.$http.patch("/stopper/undo",null, {
+            params: {
+              athleteEventId: this.athleteEvent.athleteEventId
+            }
+          }
+      ).then(response => {
+        this.$emit('undoClickEvent')
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
