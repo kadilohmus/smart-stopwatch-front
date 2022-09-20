@@ -14,8 +14,12 @@ export default {
   methods: {
     // todo: vajab implementeerimist
     editAthleteEvent: function (athleteEvent) {
-      this.$router.push({name: 'athleteSetupRoute', query: {athleteEventId: athleteEvent.athleteEventId, athleteId: athleteEvent.athleteId}})
-
+      this.$router.push({name: 'athleteSetupRoute',
+        query: {
+        athleteEventId: athleteEvent.athleteEventId,
+          athleteId: athleteEvent.athleteId,
+          strokeId: athleteEvent.strokeId,
+          eventLength: athleteEvent.athleteEventLength}})
     }
   }
 }

@@ -2,9 +2,6 @@
   <div>
     <br>
     <h1>Athlete event settings</h1><br>
-<!--        <div class="row">-->
-<!--          <p class="text-center">{{ athleteEvent.strokeType }} {{ athleteEvent.athleteEventLength }}</p>-->
-<!--        </div>-->
     <div class="container" style="float: right">
       <table class="table table-borderless" style="width: 60%">
         <thead>
@@ -18,27 +15,53 @@
         <tbody>
         <tr align="left">
           <td><p style="color: black; font-weight: bold">Athlete</p></td>
-          <td><select class="rounded" style="width: 150px; border-color: white" v-model="selectedAthleteId">
+          <td>
+            <select class="rounded" style="width: 150px; border-color: white" v-model="athleteSetupRequest.athleteId">
             <option value="" disabled="true" selected="true">choose athlete</option>
             <option v-for=" athleteInfo in athleteInfos" :value="athleteInfo.athleteId">{{ athleteInfo.athleteName }}
             </option>
-          </select></td>
+          </select>
+          </td>
           <td rowspan="3">
             <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="updateAthleteEvent">Update</button>
-            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="addNewAthlete">Create new athlete</button>
+            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="toggleDisplayAddAthleteTable">Create new athlete</button>
             <button type="button" style="margin: 5px" class="btn btn-outline-dark" v-on:click="cancelEditAthleteEvent">Cancel</button>
           </td>
         </tr>
         <tr align="left">
           <td><p style="color: black; font-weight: bold">Stroke</p></td>
-          <td><select class="rounded" style="width: 150px; border-color: white" v-model="selectedStrokeTypeId">
+          <td><select class="rounded" style="width: 150px; border-color: white" v-model="athleteSetupRequest.strokeId">
             <option value="" disabled="true" selected="true">choose stroke</option>
             <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>
           </select></td>
         </tr>
         <tr align="left">
           <td><p style="color: black; font-weight: bold">Distance</p></td>
-          <td><input type="text" class="rounded" style="width: 60px; border-color: white" v-model="selectedEventLength"> meters</td>
+          <td><input type="number" class="rounded" style="width: 60px; border-color: white" v-model="athleteSetupRequest.eventLength"> meters</td>
+        </tr>
+        </tbody>
+      </table>
+      <br><br>
+    </div>
+    <br>
+    <div class="container" style="float: right" v-if="divDisplayAddAthleteTable">
+
+      <table class="table table-borderless" style="width: 60%">
+        <thead>
+        <tr>
+          <th style="width: 10%" scope="col"></th>
+          <th style="width: 10%" scope="col"><h2 style="color: white">Create new athlete</h2></th>
+          <th style="width: 10%" scope="col"></th>
+        </tr>
+        <br>
+        </thead>
+        <tbody>
+        <tr align="left" >
+          <td><p style="color: black; font-weight: bold">Name</p></td>
+          <td><input type="text" class="rounded" style="width: 160px; border-color: white" v-model="addAthleteRequest.name"></td>
+          <td>
+            <button type="button" style="margin: 5px" class="btn btn-dark" v-on:click="createNewAthlete">Create</button>
+            </td>
         </tr>
         </tbody>
       </table>
@@ -56,10 +79,9 @@ export default {
   },
   data: function () {
     return {
-      athleteId: Number(this.$route.query.athleteId),
-      athleteEventId: Number(this.$route.query.athleteEventId),
       userId: sessionStorage.getItem('userId'),
-      eventId: 2,
+      eventId: sessionStorage.getItem('eventId'),
+      divDisplayAddAthleteTable: false,
       selectedEventLength: 0,
       selectedAthleteId: '',
       selectedStrokeTypeId: '',
@@ -78,8 +100,8 @@ export default {
       athleteSetupRequest: {
         athleteEventId: Number(this.$route.query.athleteEventId),
         athleteId: Number(this.$route.query.athleteId),
-        strokeId: 0,
-        eventLength: 0
+        strokeId: Number(this.$route.query.strokeId),
+        eventLength: Number(this.$route.query.eventLength)
       },
       addAthleteRequest: {
         name: '',
@@ -100,9 +122,7 @@ export default {
           }
       ).then(response => {
         this.athleteInfos = response.data
-        if (this.athleteId == 9) {
-          this.selectedAthleteId = 2
-        }
+        this.selectedAthleteId = this.athleteSetupRequest.athleteId
         console.log('oleme siin')
       }).catch(error => {
         console.log(error)
@@ -112,6 +132,7 @@ export default {
       this.$http.get("/setup/stroke")
           .then(response => {
             this.strokeDtos = response.data
+            this.selectedStrokeTypeId = this.athleteSetupRequest.strokeId
           }).catch(error => {
         console.log(error)
       })
@@ -120,6 +141,7 @@ export default {
 
       this.$http.patch("/setup/athlete-event", this.athleteSetupRequest
       ).then(response => {
+        this.$router.push('/event')
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -129,18 +151,24 @@ export default {
       this.$router.push('/event')
       
     },
-    addNewAthlete: function () {
+    createNewAthlete: function () {
       this.$http.post("/setup/athlete",null, {
             params: {
-              name: '',
+              name: this.addAthleteRequest.name,
               trainerUserId: sessionStorage.getItem('userId')
             }
           }
       ).then(response => {
-        this.addAthleteResponse = response.data
+        this.getAllAthletesDropdownInfo()
+        this.athleteSetupRequest.athleteId = response.data.athleteId
+        this.toggleDisplayAddAthleteTable()
+
       }).catch(error => {
         console.log(error)
       })
+    },
+    toggleDisplayAddAthleteTable: function () {
+      this.divDisplayAddAthleteTable = !this.divDisplayAddAthleteTable
     }
   },
   mounted() {

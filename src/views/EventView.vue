@@ -48,7 +48,7 @@ export default {
       divDisplayMainTable: true,
       divDisplayEditAthleteEvent: false,
       divDisplayDefaultAthleteOption: false,
-      eventId: 2,
+      eventId: sessionStorage.getItem('eventId'),
       selectedEventLength: 0,
       selectedAthleteId: 0,
       selectedStrokeTypeId: 0,
