@@ -1,56 +1,38 @@
 <template>
   <div>
-    <AlertError :errorMessage="alertError"/>
-    <AlertWarning :warningMessage="alertWarning"/>
-    <div class="container">
-      <br><br>
-      <h1>Search athlete</h1><br>
-      <input type="text" style="margin: 5px; border-color: white; border-radius: 7px" placeholder="Name" v-model="name"><br><br>
-      <button type="button" style="margin: 5px" class="btn btn-outline-light btn-lg" v-on:click="findAthleteByName">Search</button>
-      <br>
-      <router-link to="/menu" style="margin: 25px" class="btn btn-outline-danger" tag="button">Back to Menu</router-link>
+    <div v-if="divDisplayFindAthletes">
+      <FindAthleteByNameForm title="Find Athlete" @athleteResultSuccess="updateAthleteFromResult"/>
+      <!-- LEITUD atleedid-->
+      <div v-if="athletes.length > 0">
+        <AthleteTable :athletes="athletes" title="Athletes"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import AlertError from "@/components/alerts/AlertError";
-import AlertWarning from "@/components/alerts/AlertWarning";
+import FindAthleteByNameForm from "@/components/athlete/FindAthleteByNameForm";
+import AthleteTable from "@/components/athlete/AthleteTable";
 
 export default {
   name: "SearchView",
-  components: {AlertError, AlertWarning},
+  components: {AthleteTable, FindAthleteByNameForm},
   data: function () {
     return {
+      divDisplayFindAthletes: true,
+      divDisplayAthletesTable: true,
       name: '',
-      alertError: '',
-      alertWarning: ''
+      athlete: {},
+      athletes: []
     }
   },
   methods: {
-    findAthleteByName: function () {
-      this.alertError = ''
-      this.alertWarning = ''
-
-      if (this.name.length === 0) {
-        this.alertError = 'Search field is empty, please enter a name!';
-      } else {
-        this.$http.get("/report/athlete", {
-              params: {
-                name: this.name
-              }
-            }
-        ).then(response => {
-          let athleteResult = response.data
-          if (athleteResult.length === 0) {
-            this.alertWarning = response.data.detail;
-          } else {
-            // todo: athlete nimedega tabel
-          }
-        }).catch(error => {
-          this.alertError = error.response.data.detail
-        });
-      }
+    updateAthleteFromResult: function (athleteResult) {
+      this.athletes = athleteResult
+    },
+    displayFindAthletes: function () {
+      this.athletes = []
+      this.divDisplayFindAthletes = true
     }
   }
 }

@@ -123,7 +123,6 @@ export default {
       ).then(response => {
         this.athleteInfos = response.data
         this.selectedAthleteId = this.athleteSetupRequest.athleteId
-        console.log('oleme siin')
       }).catch(error => {
         console.log(error)
       })
@@ -138,7 +137,6 @@ export default {
       })
     },
     updateAthleteEvent: function () {
-
       this.$http.patch("/setup/athlete-event", this.athleteSetupRequest
       ).then(response => {
         this.$router.push('/event')
@@ -149,7 +147,6 @@ export default {
     },
     cancelEditAthleteEvent: function () {
       this.$router.push('/event')
-      
     },
     createNewAthlete: function () {
       this.$http.post("/setup/athlete",null, {

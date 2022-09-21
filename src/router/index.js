@@ -7,8 +7,8 @@ import AdminView from "@/views/AdminView";
 import SearchView from "@/views/SearchView";
 import EventView from "@/views/EventView";
 import GlobalSettingsView from "@/views/GlobalSettingsView";
-import AthleteSettingsView from "@/views/AthleteSetupView";
 import AthleteSetupView from "@/views/AthleteSetupView";
+import AthleteEventsView from "@/views/AthleteEventsView";
 
 Vue.use(VueRouter)
 
@@ -52,6 +52,11 @@ const routes = [
     path: '/athlete-setup',
     name: 'athleteSetupRoute',
     component: AthleteSetupView
+  },
+  {
+    path: '/athlete-events',
+    name: 'v',
+    component: AthleteEventsView
   },
 ]
 
