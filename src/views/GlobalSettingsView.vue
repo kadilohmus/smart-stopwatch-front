@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <tr align="left">
-          <td><p style="color: white; font-weight: bold">Pool split</p></td>
+          <td><p style="color: white; font-weight: bold">Split length</p></td>
           <td><select class="rounded" style="width: 90px; border-color: white"
                       v-model="settingRequest.splitLengthId">
 <!--            <option value="" selected="true" disabled>meters</option>-->

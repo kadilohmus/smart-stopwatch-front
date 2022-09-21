@@ -35,7 +35,7 @@ export default {
       if (this.name.length === 0) {
         this.alertError = 'Search field is empty, please enter a name!';
       } else {
-        this.$http.get("/search", {
+        this.$http.get("/report/athlete", {
               params: {
                 name: this.name
               }

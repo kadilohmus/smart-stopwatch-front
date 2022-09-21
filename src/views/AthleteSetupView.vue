@@ -3,7 +3,7 @@
     <br><br>
     <h1>Athlete event settings</h1><br><br>
     <div class="container" style="float: right">
-      <table class="table table-borderless" style="width: 70%">
+      <table class="table table-borderless" style="width: 65%">
         <thead>
         <tr>
           <th style="width: 10%" scope="col"></th>
@@ -46,7 +46,7 @@
     <br>
     <div class="container" style="float: right" v-if="divDisplayAddAthleteTable">
 
-      <table class="table table-borderless" style="width: 70%">
+      <table class="table table-borderless" style="width: 65%">
         <thead>
         <tr>
           <th style="width: 10%" scope="col"></th>
