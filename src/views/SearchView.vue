@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="divDisplayFindAthletes">
+    <div v-if="">
       <FindAthleteByNameForm title="Find Athlete" @athleteResultSuccess="updateAthleteFromResult"/>
       <!-- LEITUD atleedid-->
       <div v-if="athletes.length > 0">
@@ -19,8 +19,6 @@ export default {
   components: {AthleteTable, FindAthleteByNameForm},
   data: function () {
     return {
-      divDisplayFindAthletes: true,
-      divDisplayAthletesTable: true,
       name: '',
       athlete: {},
       athletes: []
@@ -29,10 +27,6 @@ export default {
   methods: {
     updateAthleteFromResult: function (athleteResult) {
       this.athletes = athleteResult
-    },
-    displayFindAthletes: function () {
-      this.athletes = []
-      this.divDisplayFindAthletes = true
     }
   }
 }

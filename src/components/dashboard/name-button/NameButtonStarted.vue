@@ -1,7 +1,10 @@
 <template>
   <div>
     <button type="button" style="margin: 5px" class="btn btn-success btn-lg name-button-started" v-on:click="splitClick">
-      {{ athleteEvent.athleteName }}
+
+      <span>{{ athleteEvent.athleteName }}</span>
+      <br>
+      <span>{{ athleteEvent.lastSplitTime }}</span>
     </button>
     <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" v-on:click="undoClick"/>
   </div>

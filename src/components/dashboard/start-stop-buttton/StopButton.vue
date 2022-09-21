@@ -9,15 +9,27 @@
 export default {
   name: 'StopButton',
   props: {
-    heatRow: {},
-    startClick: {}
+    heatRow: {}
+  },
+  data: function () {
+    return {
+      stopRequest: {
+        eventId: 0,
+        heatNumber: 0
+      }
+    }
   },
   methods: {
     stopHeatClick: function () {
-      // see meetod on vaja ära implementeerida, kui back'is on teenus valmis!!!!!
-      alert("STOP heat event ")
-      // only then success response (then blokk)
-      this.$emit('stopHeatClickEvent')
+      this.stopRequest.eventId = this.heatRow.eventId
+      this.stopRequest.heatNumber = this.heatRow.heatNumber
+      this.$http.patch("/stopper/stop", this.stopRequest
+      ).then(response => {
+        this.$emit('stopHeatClickEvent')
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

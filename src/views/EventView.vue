@@ -75,6 +75,7 @@ export default {
         heatRows: [
           {
             uuid: '',
+            eventId: 0,
             heatNumber: 0,
             hasStarted: false,
             hasFinished: false,
