@@ -15,6 +15,7 @@
     margin-right: auto;
     border: 2px dotted;
     float: top;
+    /*vertical-align: central;*/
 }
 
 .dashboard-table-cols {
@@ -29,6 +30,10 @@
     border-color: white;
     border-top: 1px dotted;
     border-bottom: 1px dotted;
+}
+
+.search-table-divider {
+    border-top: 2px solid currentcolor;
 }
 
 .search-table-text {
@@ -132,4 +137,29 @@
 
 .header-left {
     float: left;
+}
+
+.image-container {
+    background-size: cover;
+    position: relative; /* Needed to position the cutout text in the middle of the image */
+    height: 250px; /* Some height */
+}
+
+.text {
+    background-color: white;
+    color: black;
+    font-size: 6vw; /* Responsive font size */
+    font-weight: bolder;
+    margin: 0 auto; /* Center the text container */
+    padding: 0px;
+    width: 60%;
+    text-align: center; /* Center text */
+    position: absolute; /* Position text */
+    top: 50%; /* Position text in the middle */
+    left: 50%; /* Position text in the middle */
+    transform: translate(-50%, -50%); /* Position text in the middle */
+    mix-blend-mode: screen; /* This makes the cutout text possible */
+    opacity: 0.5;
+    border-radius: 10px;
+    letter-spacing: 6px;
 }

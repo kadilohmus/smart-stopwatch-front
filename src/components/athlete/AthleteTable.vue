@@ -11,7 +11,7 @@
       </thead>
       <tbody>
       <tr>
-        <td v-on:click="toAthleteEventsView(athlete)" class="search-table-text">{{ athlete.athleteName }}</td>
+        <td v-on:click="toAthleteView(athlete)" class="search-table-text">{{ athlete.athleteName }}</td>
       </tr>
       </tbody>
     </table>
@@ -31,13 +31,13 @@ export default {
     }
   },
   methods: {
-    toAthleteEventsView: function (athlete) {
-      this.$router.push({name: 'athleteEventsRoute',
+    toAthleteView: function (athlete) {
+      this.$router.push({name: 'athleteRoute',
         query: {
         athleteId: athlete.athleteId,
           athleteName: athlete.athleteName
       }})
-    },
+    }
   }
 
 }

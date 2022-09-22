@@ -8,7 +8,9 @@ import SearchView from "@/views/SearchView";
 import EventView from "@/views/EventView";
 import GlobalSettingsView from "@/views/GlobalSettingsView";
 import AthleteSetupView from "@/views/AthleteSetupView";
+import AthleteView from "@/views/AthleteView";
 import AthleteEventsView from "@/views/AthleteEventsView";
+import AthleteEventSplitView from "@/views/AthleteEventSplitView";
 
 Vue.use(VueRouter)
 
@@ -54,9 +56,19 @@ const routes = [
     component: AthleteSetupView
   },
   {
+    path: '/athlete',
+    name: 'athleteRoute',
+    component: AthleteView
+  },
+  {
     path: '/athlete-events',
     name: 'athleteEventsRoute',
     component: AthleteEventsView
+  },
+  {
+    path: '/splits',
+    name: 'athleteEventSplitRoute',
+    component: AthleteEventSplitView
   },
 ]
 

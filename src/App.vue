@@ -3,9 +3,8 @@
     <div id="app" class="header">
       <div class="header-left">
         <router-link to="/">Home</router-link>
-        <router-link to="/menu">Menu</router-link>
-        <router-link to="/global-settings">Global settings</router-link>
-        <router-link to="/event">Event</router-link>
+<!--        <router-link to="/menu">Menu</router-link>-->
+        <router-link to="/global-settings">Create event</router-link>
         <router-link to="/search">Search</router-link>
       </div>
     </div>

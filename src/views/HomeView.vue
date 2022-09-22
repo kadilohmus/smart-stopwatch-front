@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <Login title="Log in"/>
-
+    <div class="image-container">
+      <div class="text">SmartStopWatch</div>
+    </div>
   </div>
 </template>
 

@@ -8,7 +8,7 @@
       </thead>
       <tbody>
       <tr v-for=" stroke in strokeDtos" :value="stroke.id">
-        <td class="search-table-text" v-on:click="toAthleteEventsTable(strokeDtos)">{{ stroke.type }}</td>
+        <td class="search-table-text" v-on:click="toAthleteEventsView(stroke)">{{ stroke.type }}</td>
       </tr>
       </tbody>
     </table>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "AthleteEventTable",
+  name: "StrokeTable",
   data: function () {
     return {
       athleteName: String(this.$route.query.athleteName),
@@ -39,11 +39,18 @@ export default {
         console.log(error)
       })
     },
-    toAthleteEventsTable: function () {
-
+    toAthleteEventsView: function (stroke) {
+      sessionStorage.setItem('strokeType', stroke.type)
+      this.$router.push({
+        name: 'athleteEventsRoute',
+        query: {
+          athleteId: this.athleteId,
+          athleteName: this.athleteName,
+          strokeId: stroke.id
+        }
+      })
     }
   },
-
   mounted() {
     this.findAllStrokes()
   }
