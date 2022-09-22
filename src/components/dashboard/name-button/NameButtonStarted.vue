@@ -1,10 +1,13 @@
 <template>
   <div>
-    <button type="button" style="margin: 5px" class="btn btn-success btn-lg name-button-started" v-on:click="splitClick">
+    <button type="button" style="margin: 5px" class="btn btn-success btn-lg name-button-started"
+            v-on:click="splitClick">
 
       <span>{{ athleteEvent.athleteName }}</span>
       <br>
-      <span>{{ lastSplitTime }}</span>
+      <span class="name-button-started-time">{{ distanceCoveredTime }}</span>
+      <br>
+      <span>{{ distanceCoveredLength }}m</span>
     </button>
     <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" v-on:click="undoClick"/>
   </div>
@@ -18,15 +21,16 @@ export default {
   },
   data: function () {
     return {
-      lastSplitTime: 'test'
+      distanceCoveredTime: '',
+      distanceCoveredLength: ''
     }
   },
   methods: {
     splitClick: function () {
       this.$http.post("/stopper/split", null, {
-        params: {
-          athleteEventId: this.athleteEvent.athleteEventId
-        }
+            params: {
+              athleteEventId: this.athleteEvent.athleteEventId
+            }
           }
       ).then(response => {
 
@@ -36,7 +40,7 @@ export default {
       })
     },
     undoClick: function () {
-      this.$http.patch("/stopper/undo",null, {
+      this.$http.patch("/stopper/undo", null, {
             params: {
               athleteEventId: this.athleteEvent.athleteEventId
             }
@@ -47,13 +51,42 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    createDistanceCoveredLength: function () {
+      if (this.athleteEvent.lastSplitCount > 0) {
+        this.distanceCoveredLength = this.athleteEvent.distanceCovered
+      }
+    },
+
+    createDistanceCoveredTime: function () {
+      if (this.athleteEvent.lastSplitCount > 0) {
+        var timeElapsed = new Date(this.athleteEvent.distanceCoveredTimeMilliseconds - this.athleteEvent.startTimeMilliseconds);
+
+      var min = timeElapsed.getUTCMinutes()
+      var sec = timeElapsed.getUTCSeconds()
+      var ms = timeElapsed.getUTCMilliseconds();
+
+      this.distanceCoveredTime =
+          // stopper 'hour' prefix is commented out
+          // remove comment "//" to enable hours
+          // this.zeroPrefix(hour, 1) + ":" +
+          this.zeroPrefix(min, 2) + ":" +
+          this.zeroPrefix(sec, 2) + "." +
+          this.zeroPrefix(ms, 2);
+      }
+    },
+
+    zeroPrefix: function (num, digit) {
+      var zero = '';
+      for (var i = 0; i < digit; i++) {
+        zero += '0';
+      }
+      return (zero + num).slice(-digit);
     }
   },
   mounted() {
-    alert("NameButtonStarted.vue: " + this.athleteEvent.lastSplitCount)
-    if (this.athleteEvent.lastSplitCount > 0) {
-      this.lastSplitTime = new Date(this.lastSplitTime);
-    }
+    this.createDistanceCoveredTime()
+    this.createDistanceCoveredLength()
   }
 }
 </script>

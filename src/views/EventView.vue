@@ -6,7 +6,7 @@
 
 
     <!-- todo: (HALL KAST) -->
-    <div class="container p-3 mb-2 bg-secondary text-white" v-if="divDisplayMainTable">
+    <div class="container p-3 mb-2 bg-secondary text-white">
 
       <!-- todo: (LOOPIME RIDASID) -->
       <div class="row" v-for="heatRow in stopperDashboard.heatRows" :key="heatRow.uuid">
@@ -51,7 +51,6 @@ export default {
 
   data: function () {
     return {
-      divDisplayMainTable: true,
       divDisplayEditAthleteEvent: false,
       divDisplayDefaultAthleteOption: false,
       eventId: sessionStorage.getItem('eventId'),
@@ -77,10 +76,11 @@ export default {
             uuid: '',
             eventId: 0,
             heatNumber: 0,
-            hasStarted: false,
-            hasFinished: false,
+            hasStarted: true,
+            hasFinished: true,
             heatButtonStatus: '',
             heatStartTimeMilliseconds: 0,
+            heatFinishTimeMilliseconds: 0,
             athleteEvents: [
               {
                 athleteId: 0,
@@ -90,11 +90,14 @@ export default {
                 strokeId: 0,
                 strokeType: '',
                 hasStarted: true,
-                startTime: '',
-                lastSplitTime: '',
+                startTimeMilliseconds: 0,
+                finishTimeMilliseconds: 0,
+                distanceCoveredTimeMilliseconds: 0,
                 lastSplitCount: 0,
+                distanceCovered: 0,
                 hasFinished: true,
-                finishTime: ''
+                laneNumber: 0,
+                heatNumber: 0
               }
             ]
           }

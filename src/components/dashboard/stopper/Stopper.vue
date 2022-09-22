@@ -1,7 +1,7 @@
 <template>
   <div class="col">
     <h2>Time</h2>
-      <span class="time">{{ time }}</span>
+    <span class="stopper-time">{{ time }}</span>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 export default {
   name: "Stopper",
   props: {
-    heatRow: Object
+    heatRow: {}
   },
   data: function () {
     return {
@@ -20,7 +20,7 @@ export default {
     }
   },
   methods: {
-    start: function () {
+    startStopperWhenHeatStarted: function () {
       this.timeBegan = new Date(this.heatRow.heatStartTimeMilliseconds);
       this.started = setInterval(this.clockRunning, 10);
     },
@@ -42,6 +42,22 @@ export default {
           this.zeroPrefix(sec, 2) + "." +
           this.zeroPrefix(ms, 2);
     },
+    createTime: function () {
+      if (this.heatRow.hasStarted && !this.heatRow.hasFinished) {
+        this.startStopperWhenHeatStarted();
+      } else if (this.heatRow.hasStarted && this.heatRow.hasFinished) {
+        this.createTimeWhenFinished()
+      } else {
+        this.time = '0:00.000'
+      }
+    },
+    createTimeWhenFinished: function f() {
+      var timeElapsed = new Date(this.heatRow.heatFinishTimeMilliseconds - this.heatRow.heatStartTimeMilliseconds);
+      var min = timeElapsed.getUTCMinutes()
+      var sec = timeElapsed.getUTCSeconds()
+      var ms = timeElapsed.getUTCMilliseconds();
+      this.time = this.zeroPrefix(min, 2) + ":" + mthis.zeroPrefix(sec, 2) + "." + this.zeroPrefix(ms, 2);
+    },
 
     zeroPrefix: function (num, digit) {
       var zero = '';
@@ -52,9 +68,7 @@ export default {
     }
   },
   mounted() {
-    if (this.heatRow.hasStarted) {
-      this.start();
-    }
+    this.createTime()
   }
 }
 </script>
