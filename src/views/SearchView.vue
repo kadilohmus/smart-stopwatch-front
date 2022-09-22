@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-if="">
+    <div>
       <FindAthleteByNameForm title="Find Athlete" @athleteResultSuccess="updateAthleteFromResult"/>
       <!-- LEITUD atleedid-->
-      <div v-if="athletes.length > 0">
-        <AthleteTable :athletes="athletes" title="Athletes"/>
+      <div v-if="athlete.athleteName.length > 0">
+        <AthleteTable title="Found" :athlete="athlete"/>
       </div>
     </div>
   </div>
@@ -20,14 +20,15 @@ export default {
   data: function () {
     return {
       name: '',
-      athlete: {},
-      athletes: []
+      athlete: {
+        athleteId: 0,
+        athleteName: ''
+      }
     }
   },
   methods: {
     updateAthleteFromResult: function (athleteResult) {
-      alert("SearchView.vue " + athleteResult)
-      this.athletes = athleteResult
+      this.athlete = athleteResult
     }
   }
 }

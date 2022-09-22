@@ -6,7 +6,7 @@
 
 
     <!-- todo: (HALL KAST) -->
-    <div class="container p-3 mb-2 bg-secondary text-white">
+    <div class="dashboard-table">
 
       <!-- todo: (LOOPIME RIDASID) -->
       <div class="row" v-for="heatRow in stopperDashboard.heatRows" :key="heatRow.uuid">

@@ -13,7 +13,9 @@
         <span>{{ distanceCoveredLength }}m</span>
       </div>
     </button>
-    <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" v-on:click="undoClick"/>
+<!--    <div v-if="distanceCoveredLength != 0">-->
+    <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" v-if="distanceCoveredLength != 0" v-on:click="undoClick"/>
+<!--    </div>-->
   </div>
 </template>
 <script>

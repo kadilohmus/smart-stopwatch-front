@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/athlete-events',
-    name: 'v',
+    name: 'athleteEventsRoute',
     component: AthleteEventsView
   },
 ]

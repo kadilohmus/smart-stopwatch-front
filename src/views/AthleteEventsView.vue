@@ -1,10 +1,17 @@
 <template>
-
+  <div>
+    <br><br><h1>{{athleteName}}</h1><br><br>
+  </div>
 </template>
 
 <script>
 export default {
-name: "AthleteEventsView"
+  name: "AthleteEventsView",
+  data: function () {
+    return {
+      athleteName: String(this.$route.query.athleteName)
+    }
+  }
 }
 </script>
 

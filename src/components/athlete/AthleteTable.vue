@@ -1,17 +1,17 @@
 <template>
   <div>
-    <br>
+    <br><br>
     <h2>{{ title }}</h2><br>
 
-    <table class="table table-hover">
+    <table class="search-table">
       <thead>
       <tr>
-        <th scope="col">Athlete</th>
+        <th scope="col" style="color: white"></th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="athlete in athletes">
-        <td v-on:click="toAthleteEventsTable(athlete)">{{ athlete.athleteName }}</td>
+      <tr>
+        <td v-on:click="toAthleteEventsTable(athlete)" class="search-table-text">{{ athlete.athleteName }}</td>
       </tr>
       </tbody>
     </table>
@@ -22,13 +22,22 @@
 export default {
   name: "AthleteTable",
   props: {
-    athletes: {},
-    title: String
+    title: String,
+    athlete: {}
+  },
+  data: function () {
+    return {
+
+    }
   },
   methods: {
     toAthleteEventsTable: function (athlete) {
-      sessionStorage.setItem('athleteName', athlete.athleteName)
-      this.$router.push({name: 'athleteEventsRoute', query: {athleteId: athlete.athleteId}})
+      sessionStorage.setItem('athleteName', this.athlete.athleteName)
+      this.$router.push({name: 'athleteEventsRoute',
+        query: {
+        athleteId: athlete.athleteId,
+          athleteName: athlete.athleteName
+      }})
     },
   }
 
