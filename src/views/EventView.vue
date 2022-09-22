@@ -17,7 +17,7 @@
         />
 
         <!-- todo: (NIMELISED NUPUD) -->
-        <div class="col" v-for="athleteEvent in heatRow.athleteEvents">
+        <div class="col" style="float: left; padding-top: 20px; padding-bottom: 10px; alignment: left" v-for="athleteEvent in heatRow.athleteEvents">
           <NameButton :athlete-event="athleteEvent"
                       @splitClickEvent="getDashboardInfo"
                       @undoClickEvent="getDashboardInfo"

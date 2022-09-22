@@ -1,18 +1,26 @@
 /* icon klasside üle kirjutamine */
-.fa-arrow-rotate-left {
-    color: crimson;
+.fa-arrow-rotate-left:hover {
+    font-size: 23px;
+    color: white;
+    padding-left: 0px;
 }
-
-/* enda välja mõeldud klassid, sisu copy-paste bootstrapi pealt
-    css stiililegit laetakse jooksvalt
-    !important; on käsk mis sõidab üle mistahes varasematest stiililehe kujundustest
- */
+.fa-arrow-rotate-left {
+    font-size: 20px;
+    color: white;
+    padding-left: 3px;
+}
 
 .dashboard-table {
     margin-left: auto;
     margin-right: auto;
     border: 2px dotted;
     float: top;
+}
+
+.dashboard-table-cols {
+    float: left;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .search-table {
@@ -33,6 +41,10 @@
 }
 
 .name-button-initial {
+    /* enda välja mõeldud klassid, sisu copy-paste bootstrapi pealt
+        css stiililegit laetakse jooksvalt
+        !important; on käsk mis sõidab üle mistahes varasematest stiililehe kujundustest
+     */
     --bs-btn-color: #fff !important;
     --bs-btn-bg: #198754 !important;
     --bs-btn-border-color: #198754 !important;
@@ -92,7 +104,8 @@
 }
 
 .stopper-time {
-
+    padding-top: 50px;
+    font-size: 30px;
 }
 
 .header {

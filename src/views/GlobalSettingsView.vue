@@ -19,7 +19,6 @@
           <td><p style="color: white; font-weight: bold">Split length</p></td>
           <td><select class="rounded" style="width: 90px; border-color: white"
                       v-model="settingRequest.splitLengthId">
-<!--            <option value="" selected="true" disabled>meters</option>-->
             <option v-for=" split in splitDtos" :value="split.id">{{ split.meters }}</option>
           </select><a style="color: white"> meters</a></td>
           <td rowspan="7"><button type="button" style="margin-bottom: 10px; width: 150px; height: 150px" class="btn btn-outline-light" v-on:click="createGlobalSettings">Create event
@@ -36,7 +35,6 @@
           <td><p style="color: white; font-weight: bold">Stroke</p></td>
           <td><select class="rounded" style="width: 150px; border-color: white"
                       v-model="settingRequest.strokeId">
-<!--            <option value="" disabled="true" selected="true">choose stroke</option>-->
             <option v-for=" stroke in strokeDtos" :value="stroke.id">{{ stroke.type }}</option>
           </select></td>
         </tr>

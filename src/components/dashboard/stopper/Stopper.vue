@@ -1,7 +1,6 @@
 <template>
-  <div class="col">
-    <h2>Time</h2>
-    <span class="stopper-time">{{ time }}</span>
+  <div class="col" style="margin-top:45px">
+    <span class="stopper-time" >{{ time }}</span>
   </div>
 </template>
 

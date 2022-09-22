@@ -6,12 +6,12 @@
     <table class="search-table">
       <thead>
       <tr>
-        <th scope="col" style="color: white"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
       <tr>
-        <td v-on:click="toAthleteEventsTable(athlete)" class="search-table-text">{{ athlete.athleteName }}</td>
+        <td v-on:click="toAthleteEventsView(athlete)" class="search-table-text">{{ athlete.athleteName }}</td>
       </tr>
       </tbody>
     </table>
@@ -31,8 +31,7 @@ export default {
     }
   },
   methods: {
-    toAthleteEventsTable: function (athlete) {
-      sessionStorage.setItem('athleteName', this.athlete.athleteName)
+    toAthleteEventsView: function (athlete) {
       this.$router.push({name: 'athleteEventsRoute',
         query: {
         athleteId: athlete.athleteId,

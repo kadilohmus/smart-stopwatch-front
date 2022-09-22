@@ -1,8 +1,7 @@
 <template>
   <div>
     <div>
-      <FindAthleteByNameForm title="Find Athlete" @athleteResultSuccess="updateAthleteFromResult"/>
-      <!-- LEITUD atleedid-->
+      <FindAthleteByNameForm @athleteResultSuccess="updateAthleteFromResult"/>
       <div v-if="athlete.athleteName.length > 0">
         <AthleteTable title="Found" :athlete="athlete"/>
       </div>
@@ -33,7 +32,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
