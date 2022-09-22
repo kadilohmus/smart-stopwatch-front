@@ -56,7 +56,7 @@ export default {
       var min = timeElapsed.getUTCMinutes()
       var sec = timeElapsed.getUTCSeconds()
       var ms = timeElapsed.getUTCMilliseconds();
-      this.time = this.zeroPrefix(min, 2) + ":" + mthis.zeroPrefix(sec, 2) + "." + this.zeroPrefix(ms, 2);
+      this.time = this.zeroPrefix(min, 2) + ":" + this.zeroPrefix(sec, 2) + "." + this.zeroPrefix(ms, 2);
     },
 
     zeroPrefix: function (num, digit) {
