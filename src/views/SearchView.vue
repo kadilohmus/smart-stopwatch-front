@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     updateAthleteFromResult: function (athleteResult) {
+      alert("SearchView.vue " + athleteResult)
       this.athletes = athleteResult
     }
   }

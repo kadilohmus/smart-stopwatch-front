@@ -51,11 +51,14 @@ export default {
             }
         ).then(response => {
           let athleteResult = response.data
+
+
+
+          alert("FindAthleteByNameForm.vue: " + JSON.stringify(response.data))
           if (athleteResult.length === 0) {
             this.alertWarning = response.data.detail
           } else {
-
-            this.$emit('athleteResultSuccess', athleteResult)
+            this.$emit('athleteResultSuccess',  athleteResult)
           }
         }).catch(error => {
           this.alertError = error.response.data.detail

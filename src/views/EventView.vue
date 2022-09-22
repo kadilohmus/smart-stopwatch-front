@@ -92,7 +92,7 @@ export default {
                 hasStarted: true,
                 startTime: '',
                 lastSplitTime: '',
-                lastSplitLength: 0,
+                lastSplitCount: 0,
                 hasFinished: true,
                 finishTime: ''
               }

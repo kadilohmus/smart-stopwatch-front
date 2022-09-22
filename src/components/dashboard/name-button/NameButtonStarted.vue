@@ -4,16 +4,22 @@
 
       <span>{{ athleteEvent.athleteName }}</span>
       <br>
-      <span>{{ athleteEvent.lastSplitTime }}</span>
+      <span>{{ lastSplitTime }}</span>
     </button>
     <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" v-on:click="undoClick"/>
   </div>
 </template>
 <script>
+
 export default {
   name: 'NameButtonStarted',
   props: {
     athleteEvent: {}
+  },
+  data: function () {
+    return {
+      lastSplitTime: 'test'
+    }
   },
   methods: {
     splitClick: function () {
@@ -23,6 +29,7 @@ export default {
         }
           }
       ).then(response => {
+
         this.$emit('splitClickEvent')
       }).catch(error => {
         console.log(error)
@@ -40,6 +47,12 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    }
+  },
+  mounted() {
+    alert("NameButtonStarted.vue: " + this.athleteEvent.lastSplitCount)
+    if (this.athleteEvent.lastSplitCount > 0) {
+      this.lastSplitTime = new Date(this.lastSplitTime);
     }
   }
 }
