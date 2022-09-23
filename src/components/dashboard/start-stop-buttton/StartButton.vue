@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" style="margin: 5px" class="btn btn-light" v-on:click="startHeatClick">
+    <button type="button" style="width: 150px; margin-top:50px" class="btn btn-light" v-on:click="startHeatClick">
       {{ heatRow.heatButtonStatus }}
     </button>
   </div>

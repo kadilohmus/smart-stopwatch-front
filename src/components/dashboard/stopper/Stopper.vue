@@ -1,5 +1,5 @@
 <template>
-  <div class="col" style="margin-top:45px">
+  <div class="col" style="margin-top:50px">
     <span class="stopper-time" >{{ time }}</span>
   </div>
 </template>
