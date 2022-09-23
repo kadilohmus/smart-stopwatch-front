@@ -79,6 +79,7 @@ export default {
       let splitLength = athleteEvent.athleteEventLength / athleteEvent.lastSplitCount
       sessionStorage.setItem('splitLength', splitLength)
       sessionStorage.setItem('distance', athleteEvent.athleteEventLength)
+      sessionStorage.setItem('totalTime', athleteEvent.time)
       this.$router.push({
         name: 'athleteEventSplitRoute',
         query: {
@@ -87,8 +88,7 @@ export default {
         }
       })
     },
-    findSplitLength: function () {
-    },
+
     createStartedToFinishedTime: function (athleteEvent) {
         var timeElapsed = new Date(athleteEvent.finishTimeMilliseconds - athleteEvent.startTimeMilliseconds);
 
