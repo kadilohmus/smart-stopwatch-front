@@ -7,7 +7,7 @@
         <thead>
         <tr>
           <th scope="col">Distance</th>
-          <th scope="col">Split times ({{splitLength}}m)</th>
+          <th scope="col">Split times</th>
         </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
         </tr>
         </tbody>
       </table>
-      <span>TOTAL TIME {{totalTime}}</span>
+      <h4 style="color: #d1c526">{{totalTime}}</h4>
       <br><router-link to="/search" style="margin: 25px" class="btn btn-outline-light" tag="button">Back to Search
     </router-link>
     </div>
