@@ -16,13 +16,14 @@
             {{ athleteEvent.athleteEventLength }}m
           </td>
           <td class="search-table-text" v-on:click="toAthleteEventSplitView(athleteEvent)">
-            {{ athleteEvent.distanceCoveredTimeMilliseconds }}
+            {{ athleteEvent.time }}
           </td>
         </tr>
         </tbody>
       </table>
-      <br><router-link to="/search" style="margin: 25px" class="btn btn-outline-light" tag="button">Back to Search
-    </router-link>
+      <br>
+      <router-link to="/search" style="margin: 25px" class="btn btn-outline-light" tag="button">Back to Search
+      </router-link>
     </div>
   </div>
 </template>
@@ -51,7 +52,8 @@ export default {
           distanceCovered: 0,
           hasFinished: true,
           laneNumber: 0,
-          heatNumber: 0
+          heatNumber: 0,
+          time: ''
         }
       ]
     }
@@ -66,6 +68,9 @@ export default {
           }
       ).then(response => {
         this.athleteEventDtos = response.data
+        for (let i = 0; i < this.athleteEventDtos.length; i++) {
+          this.athleteEventDtos[i].time = this.createStartedToFinishedTime(this.athleteEventDtos[i])
+        }
       }).catch(error => {
         console.log(error)
       })
@@ -74,17 +79,45 @@ export default {
       let splitLength = athleteEvent.athleteEventLength / athleteEvent.lastSplitCount
       sessionStorage.setItem('splitLength', splitLength)
       sessionStorage.setItem('distance', athleteEvent.athleteEventLength)
-      this.$router.push({name: 'athleteEventSplitRoute',
+      this.$router.push({
+        name: 'athleteEventSplitRoute',
         query: {
           athleteEventId: athleteEvent.athleteEventId,
           athleteName: this.athleteName
-        }})
+        }
+      })
     },
     findSplitLength: function () {
+    },
+    createStartedToFinishedTime: function (athleteEvent) {
+        var timeElapsed = new Date(athleteEvent.finishTimeMilliseconds - athleteEvent.startTimeMilliseconds);
+
+        var min = timeElapsed.getUTCMinutes()
+        var sec = timeElapsed.getUTCSeconds()
+        var ms = timeElapsed.getUTCMilliseconds();
+
+        var time =
+            // stopper 'hour' prefix is commented out
+            // remove comment "//" to enable hours
+            // this.zeroPrefix(hour, 1) + ":" +
+            this.zeroPrefix(min, 2) + ":" +
+            this.zeroPrefix(sec, 2) + "." +
+            this.zeroPrefix(ms, 2);
+        return time;
+
+    },
+
+    zeroPrefix: function (num, digit) {
+      var zero = '';
+      for (var i = 0; i < digit; i++) {
+        zero += '0';
+      }
+      return (zero + num).slice(-digit);
     }
   },
   mounted() {
     this.findAthleteEventsByStrokeId()
+    this.createStartedToFinishedTime()
   }
 }
 </script>
